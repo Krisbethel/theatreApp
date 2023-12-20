@@ -1,5 +1,3 @@
-markdown
-
 # Theatre App
 
 Theatre App is a web application for managing movie bookings, showtimes, and theaters.
@@ -63,11 +61,11 @@ Theatre App is a web application for managing movie bookings, showtimes, and the
 
 6. **Contributing:**
 
-Contributions are welcome! Please follow the Contribution Guidelines.
+   Contributions are welcome! Please follow the Contribution Guidelines.
 
 7. **License:**
 
-This project is licensed under the MIT License.
+   This project is licensed under the MIT License.
 
 
 
