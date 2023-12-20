@@ -1,97 +1,73 @@
-# Theater App
+markdown
 
-The Theater App is a web application that allows users to browse movies, book tickets, and manage theater-related information.
+# Theatre App
+
+Theatre App is a web application for managing movie bookings, showtimes, and theaters.
 
 ## Table of Contents
 
 - [Features](#features)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
+- [Technologies](#technologies)
+- [Installation](#installation)
 - [Usage](#usage)
-- [API Endpoints](#api-endpoints)
 - [Contributing](#contributing)
 - [License](#license)
 
 ## Features
 
-- Browse movies and showtimes
-- Book tickets for movies in different theaters
-- Manage theaters, showtimes, and bookings
 - User authentication and authorization
-- Admin panel for managing users and bookings
+- Movie management
+- Theater management
+- Showtime scheduling
+- Booking and payment system
+- ...
 
-## Getting Started
+## Technologies
 
-### Prerequisites
+- Node.js
+- Express.js
+- MySQL (or your preferred database)
+- HTML, CSS, JavaScript (Frontend)
+- ...
 
-- Node.js and npm installed
-- MySQL database
+## Installation
 
-### Installation
-
-1. Clone the repository:
+1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/your-username/theater-app.git
+   git clone https://github.com/your-username/theatreApp.git
 
-    Navigate to the project directory:
+2. **Install dependencies:**
 
-    bash
+    ```bash
 
-cd theater-app
+    cd theatreApp
+    npm install
 
-Install dependencies:
+3. **Set up the database:**
+     ```bash
+    Create a MySQL database and update the connection details in .env file.
 
-bash
+4. **Run the application:**
 
-npm install
-
-Create a .env file in the root directory with the following content:
-
-env
-
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your-mysql-password
-DB_DATABASE=theatredb
-SESSION_SECRET=your-session-secret
-
-Update the values with your MySQL credentials and a session secret.
-
-Run the application:
-
-bash
+    ```bash
 
     npm start
 
-    Open your browser and go to http://localhost:8000 to access the Theater App.
+    The server will be running at http://localhost:8000.
 
-Usage
+5. **Usage:**
+    ```bash
+    Visit http://localhost:8000 to access the application.
+    ...
 
-    Navigate to the homepage to browse movies and showtimes.
-    Sign up or log in to book tickets.
-    Admins can access the admin panel at http://localhost:8000/admin.
+6. **Contributing:**
 
-API Endpoints
+Contributions are welcome! Please follow the Contribution Guidelines.
 
-    /movies: Get all movies or add a new movie.
-    /theaters: Get all theaters or add a new theater.
-    /showtimes: Get all showtimes or add a new showtime.
-    /bookings: Get all bookings or add a new booking.
-
-Refer to the API documentation for more details on available endpoints.
-Contributing
-
-Contributions are welcome! Follow these steps to contribute:
-
-    Fork the repository.
-    Create a new branch: git checkout -b feature/new-feature.
-    Commit your changes: git commit -m 'Add new feature'.
-    Push to the branch: git push origin feature/new-feature.
-    Submit a pull request.
-
-License
+7. **License:**
 
 This project is licensed under the MIT License.
+
+
 
