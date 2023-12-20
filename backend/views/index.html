@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filmcube</title>
+    <link rel="stylesheet" href="/index.css" />
+    <link rel="icon" href="https://img.icons8.com/ios-filled/25/000000/clapperboard.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="some nav" id="navbar">
+      <a href="/index.html" class="logo1">
+        <span class="film">Film</span><span class="cube">cube</span></a
+      >
+      <ul>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/movies">Movies</a></li>
+        <li><a href="/booker">Bookings</a></li>
+        <li><a href="signup.html" class="sign up">Sign up</a></li>
+        <li id="userPageButton" style="display: none">
+          <a href="/admin"><img width="50" height="50" class="online"src="https://img.icons8.com/ios-filled/50/user.png" alt="user"/></a>
+        </li>
+      </ul>
+    </nav>
+    <div class="div1">
+      <div class="mainhero">
+        <div class="maintext">
+          <div class="first-line">Easily book a theatre space</div>
+          <div class="sec-line">right from any device of your choice</div>
+        </div>
+        <button id="startbtn" type="button" class="get-btn">Get started</button>
+        <button
+          id="startbtn btn"
+          type="button"
+          class="get-btn btn b2n"
+          style="display: none"
+        >
+          <a href="/movies">Explore Now</a>
+        </button>
+      </div>
+      <!-- Add this to the HTML where you want the search input -->
+      <div class="movie_search">
+        <input type="search" id="search_movies" placeholder="Search Movie" autocomplete="off" required/>
+        <button id="search_movies_button" onclick="redirectToSearchPage()">
+          <img
+            width="20"
+            height="20"
+            src="https://img.icons8.com/ios/50/search--v1.png"
+            alt="search--v1"
+          />
+        </button>
+      </div>
+    </div>
+    <h1 class="section-details h11">Available Movies</h1>
+
+    <section class="movie-Page-Layout" id="movie_details1"></section>
+
+    <div class="section-details" id="slidee">
+      <div class="slider-container">
+        <div class="slider">
+          <div class="slide">
+            <img
+              src="theatreFillms/coca-cola-removebg-preview.png"
+              alt="Sponsor 1"
+            />
+          </div>
+          <div class="slide">
+            <img
+              src="theatreFillms/unknown-removebg-preview.png"
+              alt="Sponsor 2"
+            />
+          </div>
+          <div class="slide">
+            <img src="theatreFillms/storefront-.png" alt="Sponsor 3" />
+          </div>
+          <div class="slide">
+            <img src="theatreFillms/squarebit-.png" alt="Sponsor 4" />
+          </div>
+          <div class="slide">
+            <img
+              src="theatreFillms/coca-cola-removebg-preview.png"
+              alt="Sponsor 5"
+            />
+          </div>
+          <div class="slide">
+            <img
+              src="theatreFillms/unknown-removebg-preview.png"
+              alt="Sponsor 6"
+            />
+          </div>
+          <div class="slide">
+            <img src="theatreFillms/storefront-.png" alt="Sponsor 7" />
+          </div>
+          <div class="slide">
+            <img src="theatreFillms/squarebit-.png" alt="Sponsor 8" />
+          </div>
+          <div class="slide">
+            <img
+              src="theatreFillms/coca-cola-removebg-preview.png"
+              alt="Sponsor 9"
+            />
+          </div>
+          <div class="slide">
+            <img
+              src="theatreFillms/unknown-removebg-preview.png"
+              alt="Sponsor 10"
+            />
+          </div>
+          <div class="slide">
+            <img src="theatreFillms/storefront-.png" alt="Sponsor 11" />
+          </div>
+          <div class="slide">
+            <img src="theatreFillms/squarebit-.png" alt="Sponsor 12" />
+          </div>
+          <!-- Add more slides as needed -->
+        </div>
+      </div>
+    </div>
+
+    <section class="movie-Page-Layout1" id="movie_details1"></section>
+
+    <h1 class="section-details">Most Watched Movies</h1>
+
+    <section class="movie-Page-Layout2" id="movie_details1"></section>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>About Us</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis
+            justo sed odio fermentum.
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/movies">Movies</a></li>
+            <li><a href="/bookings.html">Bookings</a></li>
+            <li><a href="/signup.html">Sign up</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <p>Email: info@filmcube.com</p>
+          <p>Phone: 0803849293</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Follow Us</h3>
+          <div class="social-icons">
+            <img
+              width="60"
+              height="50"
+              src="https://img.icons8.com/ios-filled/50/FA5252/twitter.png"
+              alt="twitter"
+            />
+            <img
+              width="50"
+              height="50"
+              src="https://img.icons8.com/ios-filled/50/FA5252/facebook-new.png"
+              alt="facebook-new"
+            />
+            <img
+              width="50"
+              height="50"
+              src="https://img.icons8.com/ios-filled/50/000000/linkedin.png"
+              alt="linkedin"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2023 filmcube. All rights reserved. | Designed by Group3</p>
+      </div>
+    </footer>
+
+    <script>
+      // Inside your client-side script
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check if the user is logged in
+        checkUserLoggedIn().then((isLoggedIn) => {
+          // Get the elements
+          const signUpButton = document.querySelector(".sign");
+          const startButton = document.getElementById("startbtn");
+          const exploreButton = document.getElementById("startbtn btn");
+          const userPageButton = document.getElementById("userPageButton");
+
+          // Set initial visibility
+          signUpButton.style.display = isLoggedIn ? "none" : "block";
+          startButton.style.display = isLoggedIn ? "none" : "block";
+          exploreButton.style.display = isLoggedIn ? "block" : "none";
+          userPageButton.style.display = isLoggedIn ? "block" : "none";
+
+          // Other client-side code...
+        });
+      });
+
+      // Function to check if the user is logged in
+      function checkUserLoggedIn() {
+        // Fetch the login status from the server
+        return fetch("/check-login-status")
+          .then((response) => response.json())
+          .then((data) => data.isLoggedIn);
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("search_movies_button")
+          .addEventListener("click", function () {
+            redirectToSearchPage();
+          });
+
+        function redirectToSearchPage() {
+          const searchTerm = document.getElementById("search_movies").value;
+          const encodedSearchTerm = encodeURIComponent(searchTerm);
+          window.location.href = `/search.html?q=${encodedSearchTerm}`;
+        }
+      });
+      function openbook(movieId) {
+        const url = `/bookings.html?movie_id=${movieId}`;
+        window.open(url);
+      }
+      document
+        .getElementById("startbtn")
+        .addEventListener("click", function () {
+          window.location.href = "/signup.html"; // Replace '/signup' with the actual path to your signup page
+        });
+
+      window.addEventListener("scroll", function () {
+        // Get the scroll position
+        var scrollPosition = window.scrollY;
+
+        // Set the height at which you want to change the background color (70vh in this case)
+        var scrollThreshold = (40 * window.innerHeight) / 100;
+
+        // Select the navbar element
+        var navbar = document.getElementById("navbar");
+
+        // Check if the scroll position is below the threshold
+        if (scrollPosition > scrollThreshold) {
+          // Apply black background color
+          navbar.style.backgroundColor = "black";
+        } else {
+          // Reset to transparent background
+          navbar.style.backgroundColor = "transparent";
+        }
+      });
+
+      // Function to fetch random movies and append them to the document
+      async function fetchAndDisplayRandomMovies() {
+        const moviesContainer = document.querySelector(".movie-Page-Layout");
+
+        try {
+          // Fetch random movies from the server (adjust the endpoint accordingly)
+          const response = await fetch("/moviesrand/random");
+          const moviesData = await response.json();
+
+          // Iterate through each movie and create HTML elements
+          moviesData.forEach((movie) => {
+            const movieElement = createMovieElement(movie);
+            moviesContainer.appendChild(movieElement);
+          });
+        } catch (error) {
+          console.error("Error fetching random movies:", error);
+        }
+      }
+      async function fetchAndDisplayRandomMovies1() {
+        const moviesContainer = document.querySelector(".movie-Page-Layout1");
+
+        try {
+          // Fetch random movies from the server (adjust the endpoint accordingly)
+          const response = await fetch("/moviesrand/random");
+          const moviesData = await response.json();
+
+          // Iterate through each movie and create HTML elements
+          moviesData.forEach((movie) => {
+            const movieElement = createMovieElement(movie);
+            moviesContainer.appendChild(movieElement);
+          });
+        } catch (error) {
+          console.error("Error fetching random movies:", error);
+        }
+      }
+      async function fetchAndDisplayRandomMovies2() {
+        const moviesContainer = document.querySelector(".movie-Page-Layout2");
+
+        try {
+          // Fetch random movies from the server (adjust the endpoint accordingly)
+          const response = await fetch("/moviesrand/random");
+          const moviesData = await response.json();
+
+          // Iterate through each movie and create HTML elements
+          moviesData.forEach((movie) => {
+            const movieElement = createMovieElement(movie);
+            moviesContainer.appendChild(movieElement);
+          });
+        } catch (error) {
+          console.error("Error fetching random movies:", error);
+        }
+      }
+
+      // Function to create a movie HTML element
+      function createMovieElement(movie) {
+        const movieDiv = document.createElement("div");
+        movieDiv.className = "current-movie";
+        movieDiv.addEventListener("click", function () {
+          // Redirect to moviedescription page or perform any other action
+          window.location.href = `/movies/${movie.movie_id}`;
+        });
+
+        const imgBoxDiv = document.createElement("div");
+        imgBoxDiv.className = "cm-img-box";
+
+        const imgElement = document.createElement("img");
+        imgElement.className = "movieimages";
+        imgElement.src = "/theatreFillms/" + movie.image; // Use the correct property from your movie object
+        imgElement.alt = movie.title; // Use the correct property from your movie object
+
+        imgBoxDiv.appendChild(imgElement);
+
+        const titleElement = document.createElement("h3");
+        titleElement.className = "movie-title";
+        titleElement.textContent = movie.title; // Use the correct property from your movie object
+
+        const durationElement = document.createElement("p");
+        durationElement.className = "screen-name";
+        durationElement.textContent = `Screen-Time: ${movie.duration} mins`; // Use the correct property from your movie object
+
+        const bookingDiv = document.createElement("div");
+        bookingDiv.className = "booking";
+
+        const priceElement = document.createElement("h2");
+        priceElement.className = "price";
+        priceElement.textContent = `${movie.price}$`; // Use the correct property from your movie object
+
+        const buyTicketsLink = document.createElement("a");
+        buyTicketsLink.className = "btn";
+        buyTicketsLink.onclick = "openbook('<%= movie.movie_id %>')";
+        buyTicketsLink.textContent = "Buy Tickets";
+
+        bookingDiv.appendChild(priceElement);
+        bookingDiv.appendChild(buyTicketsLink);
+
+        movieDiv.appendChild(imgBoxDiv);
+        movieDiv.appendChild(titleElement);
+        movieDiv.appendChild(durationElement);
+        movieDiv.appendChild(bookingDiv);
+
+        return movieDiv;
+      }
+
+      // Call the function to fetch and display random movies
+      fetchAndDisplayRandomMovies();
+      fetchAndDisplayRandomMovies1();
+      fetchAndDisplayRandomMovies2();
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var div1 = document.querySelector(".div1");
+        var images = [
+          "/theatreFillms/bg1.jpg",
+          "/theatreFillms/bg2.jpg",
+          "/theatreFillms/bg3.jpg",
+          "/theatreFillms/bg4.jpg",
+          "/theatreFillms/bg5.jpg",
+          "/theatreFillms/bg6.jpg",
+          "/theatreFillms/bg7.jpg",
+          "/theatreFillms/bg8.jpg",
+          "/theatreFillms/bg9.jpg",
+        ]; // Replace with your image URLs
+        var currentIndex = 0;
+
+        function changeBackground() {
+          div1.style.backgroundImage = "url(" + images[currentIndex] + ")";
+          currentIndex = (currentIndex + 1) % images.length;
+        }
+
+        setInterval(changeBackground, 5000); // Change background every 5 seconds (adjust as needed)
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const slider = document.querySelector(".slider");
+        let counter = 0;
+
+        setInterval(() => {
+          counter++;
+          if (counter > 7) {
+            counter = 0;
+          }
+
+          slider.style.transform = `translateX(${-counter * 25}%)`;
+        }, 5000); // Change slide every 3 seconds
+      });
+    </script>
+  </body>
+</html>

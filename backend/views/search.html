@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movies Search Results</title>
+    <link rel="stylesheet" href="/index.css" />
+    <link rel="icon" href="https://img.icons8.com/ios-filled/25/000000/clapperboard.png" type="image/png">
+    <style>
+      h1 {
+        color: #333;
+        margin: 0.5rem auto;
+        width: 400px;
+      }
+      .nav {
+        position: relative;
+      }
+
+      #results {
+        margin-top: 5rem;
+      }
+      .center {
+        text-align: center;
+      }
+      .movie-description {
+        border: 1px solid black;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .movie-description h3 {
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .movie-info {
+        display: flex;
+        padding: 10px;
+      }
+
+      .movie-image img {
+        max-width: 400px;
+        height: auto;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      }
+
+      .movie-details {
+        margin-left: 20px;
+      }
+
+      .movie-details p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: #555;
+      }
+
+      .movie-details strong {
+        color: #333;
+      }
+
+      .movie-details ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 10px 0;
+      }
+
+      .movie-details ul li {
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: #555;
+      }
+
+      .movie_search {
+        display: flex;
+        align-items: center;
+      }
+
+      #search_movies {
+        flex-grow: 1;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      #search_movies:focus {
+        outline: none;
+      }
+
+      #search_movies::placeholder {
+        color: #888;
+      }
+
+      #search_movies_button {
+        border: none;
+        border-radius: 5px;
+        padding: 8px;
+        cursor: pointer;
+      }
+
+      #search_movies_button img {
+        display: block; /* Remove default inline img spacing */
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="some nav" id="navbar">
+      <a href="/index.html" class="logo1">
+        <span class="film">Film</span><span class="cube">cube</span></a
+      >
+      <ul>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/movies">Movies</a></li>
+        <li><a href="/booker">Bookings</a></li>
+        <li><a href="signup.html" class="sign up">Sign up</a></li>
+        <li id="userPageButton" style="display: none">
+          <a href="/admin"><img width="50" height="50" class="online"src="https://img.icons8.com/ios-filled/50/user.png" alt="user"/></a>
+        </li>
+      </ul>
+    </nav>
+
+    <div id="results">
+      <h1>Search Results</h1>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>About Us</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis
+            justo sed odio fermentum.
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/movies">Movies</a></li>
+            <li><a href="/bookings.html">Bookings</a></li>
+            <li><a href="/signup.html">Sign up</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <p>Email: info@filmcube.com</p>
+          <p>Phone: 0803849293</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Follow Us</h3>
+          <div class="social-icons">
+            <img
+              width="60"
+              height="50"
+              src="https://img.icons8.com/ios-filled/50/FA5252/twitter.png"
+              alt="twitter"
+            />
+            <img
+              width="50"
+              height="50"
+              src="https://img.icons8.com/ios-filled/50/FA5252/facebook-new.png"
+              alt="facebook-new"
+            />
+            <img
+              width="50"
+              height="50"
+              src="https://img.icons8.com/ios-filled/50/000000/linkedin.png"
+              alt="linkedin"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2023 filmcube. All rights reserved. | Designed by Group3</p>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check if the user is logged in
+        checkUserLoggedIn().then((isLoggedIn) => {
+          // Get the elements
+          const signUpButton = document.querySelector(".sign");
+          const userPageButton = document.getElementById("userPageButton");
+
+          // Set initial visibility
+          signUpButton.style.display = isLoggedIn ? "none" : "block";
+          userPageButton.style.display = isLoggedIn ? "block" : "none";
+
+          // Other client-side code...
+        });
+      });
+
+      // Function to check if the user is logged in
+      function checkUserLoggedIn() {
+        // Fetch the login status from the server
+        return fetch("/check-login-status")
+          .then((response) => response.json())
+          .then((data) => data.isLoggedIn);
+      }
+      function openTrailer(trailerUrl) {
+        // Open the trailer URL in a new window
+        window.open(trailerUrl, "_blank");
+      }
+
+      function openbook(movieId) {
+        const url = `/bookings.html?movie_id=${movieId}`;
+        window.open(url);
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        // Retrieve the search term from the URL
+        const searchParams = new URLSearchParams(window.location.search);
+        const searchTerm = searchParams.get("q");
+
+        // Use the search parameter to fetch results and display them
+        fetch(`/search?q=${encodeURIComponent(searchTerm)}`)
+          .then((response) => response.json())
+          .then((data) => displayResults(data))
+          .catch((error) => console.error("Error:", error));
+
+        function displayResults(results) {
+          const resultsDiv = document.getElementById("results");
+
+          if (results.length === 0) {
+            resultsDiv.innerHTML = "No results found.";
+            resultsDiv.className = "center";
+            return;
+          }
+
+          // Display each movie result in the specified format
+          results.forEach((movie) => {
+            const movieDiv = document.createElement("div");
+            movieDiv.className = "movie-description";
+            movieDiv.innerHTML = `
+      <div class="movie-title">
+        <h3>${movie.title}</h3>
+      </div>
+      <div class="movie-info">
+        <div class="movie-image">
+          <img src="/theatreFillms/${movie.image}" alt="${movie.title}" />
+        </div>
+        <div class="movie-details">
+          <p><strong>Genre:</strong> ${movie.genre}</p>
+          <p><strong>Release Date:</strong> ${new Date(
+            movie.release_date
+          ).toDateString()}</p>
+          <p><strong>Duration:</strong> ${movie.duration} minutes</p>
+          <p><strong>Description:</strong> ${movie.description}</p>
+          <p><strong>Cast:</strong></p>
+          <ul>
+            ${
+              Array.isArray(movie.cast)
+                ? movie.cast.map((actor) => `<li>${actor}</li>`).join("")
+                : `<li>${movie.cast}</li>`
+            }
+          </ul>
+          <div class="action-buttons">
+            <button class="sign" onclick="openTrailer('${
+              movie.trailer_url
+            }')">PLAY TRAILER</button>
+            <button class="sign" onclick="openbook('${
+              movie.movie_id
+            }')">BUY TICKET</button>
+          </div>
+        </div>
+      </div>
+    `;
+            resultsDiv.appendChild(movieDiv);
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

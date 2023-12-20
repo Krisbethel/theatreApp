@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <style>
+      /* Style for the theater table */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: black;
+        overflow-x: hidden;
+      }
+      .lefty{
+        margin-left: 20rem;
+      }
+      .reduced {
+        transform: scaleY(0.8) !important;
+        left: 40% !important;
+        top: -15% !important;
+      }
+      .hidden-section {
+        display: none;
+      }
+
+      .selected {
+        background-color: rgb(77, 77, 77);
+      }
+
+      main {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      #dash_sec,
+      #users_sec,
+      #movie_sec,
+      #theater_sec,
+      #showtime_sec,
+      #booking_sec {
+        background-color: #e0e0e0;
+        padding: 20px;
+        border-radius: 20px;
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+      }
+
+      .dash_div,
+      .users_div,
+      .movie_div,
+      .theater_div {
+        background-color: #e0e0e0;
+        padding: 10px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .cube {
+        color: red;
+      }
+
+      .close {
+        font-size: 64px;
+        margin-top: 0;
+        color: white;
+      }
+
+      #navbar {
+        background-color: #b71c1c;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      #navbar a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+      }
+
+      #navbar img {
+        max-height: 50px;
+        margin-left: 2rem;
+      }
+
+      #navbar a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+      }
+
+      #navbar a:hover {
+        color: #fff;
+      }
+
+      #container {
+        display: flex;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      #sidebar {
+        width: 20%;
+        height: 100%;
+        background-color: #b71c1c;
+        box-sizing: border-box;
+      }
+
+      #sidebar a {
+        display: block;
+        padding: 15px;
+        color: white;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      #sidebar a:hover {
+        background-color: #fff;
+        color: #b71c1c;
+      }
+
+      #content {
+        width: 80%;
+        height: auto;
+        box-sizing: border-box;
+        padding: 20px;
+      }
+
+      h2 {
+        color: #333;
+      }
+
+      h2 span {
+        font-size: 16px;
+        color: #777;
+      }
+
+      .dash_div {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+      }
+
+      .card_div {
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+        cursor: pointer;
+        color: black;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        text-align: center;
+      }
+
+      .card_div img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+      }
+
+      .card_div p {
+        font-size: 18px;
+        margin: 0;
+      }
+
+      .total {
+        font-size: 28px;
+      }
+
+      button {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 1rem;
+        transform: scale(0.8);
+      }
+
+      /* Default styles for the modal */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        width: 50%; /* Adjust the width as needed */
+        max-width: 400px; /* Set a maximum width */
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Close button styles */
+      .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        color: #333;
+      }
+
+      .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        color: #333;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      table {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+      }
+
+      /* Shared styles for list tables */
+      .list {
+        margin-top: 20px;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      table th,
+      table td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+        white-space: nowrap;
+      }
+
+      table th {
+        background-color: #858282;
+        text-transform: uppercase;
+      }
+
+      /* Responsive styles for small screens */
+      @media (max-width: 600px) {
+        table th,
+        table td {
+          font-size: 12px;
+        }
+
+        .modal {
+          width: 80%; /* Adjust the width for smaller screens */
+        }
+        table {
+          width: 100%;
+          max-width: 100%;
+          overflow-x: auto;
+          display: block; /* Add this line to make the table responsive */
+        }
+        .reduced {
+          left: 10% !important;
+          top: -15% !important;
+        }
+
+        #showtime-list {
+          font-size: 14px;
+        }
+        #sidebar {
+          width: 100%;
+          display: flex;
+        }
+        #content {
+          width: 100%;
+          margin-left: 0;
+        }
+      }
+
+      /* Adjustments for screens up to 768px */
+      @media only screen and (max-width: 768px) {
+        #sidebar {
+          width: 100%;
+        }
+
+        #navbar {
+          padding: 10px;
+          justify-content: space-between;
+        }
+
+        #navbar a {
+          margin-left: 0;
+        }
+
+        #content {
+          margin-left: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav id="navbar">
+      <a href="/index.html" class="logo1">
+        <span class="film">Film</span><span class="cube">cube</span></a
+      >
+      <button class="sign" onclick="openLogoutModal()">Logout</button>
+    </nav>
+   <!-- Logout Confirmation Modal -->
+   <div id="logoutModal" class="modal">
+    <div class="modal-content">
+      <span onclick="closeModall()" style="cursor: pointer">&times;</span>
+      <h2>Confirm Logout</h2>
+      <p>Are you sure you want to logout?</p>
+      <button class="sign lefty" onclick="logout()">Logout</button>
+    </div>
+  </div>
+    <main>
+      <div id="sidebar">
+        <a href="#dash_sec" onclick="showSection('dash_sec')">Dashboard</a>
+        <a href="#users_sec" onclick="showSection('users_sec')">Users</a>
+        <a href="#movie_sec" onclick="showSection('movie_sec')">Movies</a>
+        <a href="#theater_sec" onclick="showSection('theater_sec')">Theaters</a>
+        <a href="#showtime_sec" onclick="showSection('showtime_sec')"
+          >Showtimes</a
+        >
+        <a href="#booking_sec" onclick="showSection('booking_sec')">Bookings</a>
+      </div>
+      <div id="content">
+        <section id="dash_sec" class="hidden-section">
+          <div class="dash_div">
+            <h2>DASHBOARD <span>control panel</span></h2>
+          </div>
+          <a class="card_div" href="#users_sec">
+            <div>
+              <div class="total users">0</div>
+              <p>Users</p>
+            </div>
+          </a>
+          <a class="card_div" href="#theater_sec">
+            <div>
+              <div class="total theaters">0</div>
+              <p>Theaters</p>
+            </div>
+          </a>
+          <a class="card_div" href="#movie_sec">
+            <div>
+              <div class="total movies">0</div>
+              <p>Movies</p>
+            </div>
+          </a>
+          <a class="card_div" href="#booking_sec">
+            <div>
+              <div class="total bookings">0</div>
+              <p>Bookings</p>
+            </div>
+          </a>
+        </section>
+
+        <section id="users_sec" class="hidden-section">
+          <div class="users_div">
+            <h2>USERS LIST</h2>
+          </div>
+          <table id="user-list">
+            <!-- Users table will be dynamically populated here -->
+          </table>
+          <button onclick="openuserModal()">Add User</button>
+          <button onclick="openEditUserModal(selecteduserId)">Edit User</button>
+          <button id="deleteBtn" class="delete-btn">Delete</button>
+          <!-- Modal for adding/editing a user -->
+          <div id="userModal" class="modal">
+            <div class="modal-content">
+              <span class="close" onclick="closeUserModal('userModal')"
+                >&times;</span
+              >
+              <!-- User form -->
+              <h2 id="userModalTitle">Add User</h2>
+
+              <form id="userForm">
+                <label for="username">Username:</label>
+                <input type="text" id="username" required autocomplete="off"/><br />
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" required autocomplete="off"/><br />
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" required autocomplete="off"/><br />
+
+                <label for="role">Role:</label>
+                <select id="role" required>
+                  <option value="admin">Admin</option>
+                  <option value="user">User</option></select
+                ><br />
+
+                <label for="isActive">Status:</label>
+                <select id="isActive" required>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option></select
+                ><br />
+
+                <button type="button" onclick="addUser()">Add User</button>
+              </form>
+            </div>
+          </div>
+          <div id="deleteModal" class="modal">
+            <div class="modal-content">
+              <span class="close" onclick="closeuserDeleteModal()"
+                >&times;</span
+              >
+              <p>Are you sure you want to delete this user?</p>
+              <button class="delete-btn" onclick="deleteUserOnServer()">
+                Delete
+              </button>
+            </div>
+          </div>
+          <!-- Modal for editing a user -->
+          <div id="EditUserModal" class="modal">
+            <div class="modal-content">
+              <span class="close" onclick="closeUserModal('EditUserModal')"
+                >&times;</span
+              >
+              <h2 id="userModalTitle">Edit User</h2>
+              <!-- Add form elements for adding/editing a user -->
+              <input type="hidden" id="editUserId" />
+              <label for="editUserName">Name:</label>
+              <input type="text" id="editUserName" required />
+              <label for="editUserEmail">Email:</label>
+              <input type="email" id="editUserEmail" required />
+              <label for="editUserPassword">Password:</label>
+              <input type="password" id="editUserPassword" required />
+              <label for="editUserRole">Role:</label>
+              <select id="editUserRole" required>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+              <label for="editUserStatus">Status:</label>
+              <select id="editUserStatus" required>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+              <button onclick="updateUserOnServer(selecteduserId)">
+                Update User
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="movie_sec" class="hidden-section">
+          <div class="movie_div">
+            <h2>MOVIE LIST</h2>
+          </div>
+          <table id="movie-list">
+            <!-- Movies table will be dynamically populated here -->
+          </table>
+          <button onclick="openAddMovieModal()">Add Movie</button>
+          <button onclick="openfetcher(selectedmovieid)">Edit Movie</button>
+          <button onclick="openDeleteMovieModal(selectedmovieid)">
+            Delete Movie
+          </button>
+          <!-- Modal for adding a new movie -->
+          <div id="addMovieModal" class="modal reduced">
+            <div class="modal-content">
+              <span class="close" onclick="closeAddMovieModal()">&times;</span>
+              <h2>Add New Movie</h2>
+              <form id="addMovieForm" enctype="multipart/form-data">
+                <!-- Add form elements for adding a new movie -->
+                <label for="newmovieTitle">Title:</label>
+                <input type="text" id="newmovieTitle" name="title" required autocomplete="off" />
+                <label for="newmovieGenre">Genre:</label>
+                <input type="text" id="newmovieGenre" name="genre" required autocomplete="off" />
+                <label for="newmovieReleaseDate">Release Date:</label>
+                <input
+                  type="date"
+                  id="newmovieReleaseDate"
+                  name="release_date"
+                  required
+                autocomplete="off" />
+                <label for="newmovieDuration">Duration:</label>
+                <input
+                  type="text"
+                  id="newmovieDuration"
+                  name="duration"
+                  required
+                autocomplete="off" />
+                <label for="newmovieDescription">Description:</label>
+                <textarea
+                  id="newmovieDescription"
+                  name="description"
+                  required
+                autocomplete="off" ></textarea>
+                <label for="newmovieCast">Cast:</label>
+                <input type="text" id="newmovieCast" name="cast" required autocomplete="off" />
+                <label for="newmovieTrailerUrl">Trailer URL:</label>
+                <input
+                  type="text"
+                  id="newmovieTrailerUrl"
+                  name="trailer_url"
+                  required
+                autocomplete="off" />
+                <label for="newmoviePrice">Price:</label>
+                <input type="text" id="newmoviePrice" name="price" required autocomplete="off" />
+                <label for="newmovieImage">Image:</label>
+                <input
+                  type="file"
+                  id="newmovieImage"
+                  name="image"
+                  accept="image/*"
+                  required
+                autocomplete="off" />
+                <button type="button" onclick="addNewMovie()">Add Movie</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Modal for editing a movie -->
+          <!-- Modal for editing a movie -->
+          <div id="editMovieModal" class="modal reduced">
+            <div class="modal-content">
+              <span class="close" onclick="closeEditModal()">&times;</span>
+              <h2>Edit Movie</h2>
+              <form id="editMovieForm" enctype="multipart/form-data">
+                <!-- Populate these fields with existing movie data for editing -->
+                <label for="editmovieTitle">Title:</label>
+                <input type="text" id="editmovieTitle" name="title" required />
+                <label for="editmovieGenre">Genre:</label>
+                <input type="text" id="editmovieGenre" name="genre" required />
+                <label for="editmovieReleaseDate">Release Date:</label>
+                <input
+                  type="date"
+                  id="editmovieReleaseDate"
+                  name="release_date"
+                  required
+                />
+                <label for="editmovieDuration">Duration:</label>
+                <input
+                  type="text"
+                  id="editmovieDuration"
+                  name="duration"
+                  required
+                />
+                <label for="editmovieDescription">Description:</label>
+                <textarea
+                  id="editmovieDescription"
+                  name="description"
+                  required
+                ></textarea>
+                <label for="editmovieCast">Cast:</label>
+                <input type="text" id="editmovieCast" name="cast" required />
+                <label for="editmovieTrailerUrl">Trailer URL:</label>
+                <input
+                  type="text"
+                  id="editmovieTrailerUrl"
+                  name="trailer_url"
+                  required
+                />
+                <label for="editmoviePrice">Price:</label>
+                <input type="text" id="editmoviePrice" name="price" required />
+                <label for="editmovieImage">Image:</label>
+                <input
+                  type="file"
+                  id="editmovieImage"
+                  name="image"
+                  accept="image/*"
+                />
+                <button type="button" onclick="updateMovie(selectedmovieid)">
+                  Update Movie
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Modal for deleting a movie -->
+          <div id="deleteMovieModal" class="modal">
+            <div class="modal-content">
+              <span class="close" onclick="closeDeleteMovieModal()"
+                >&times;</span
+              >
+              <h2>Delete Movie</h2>
+              <p>Are you sure you want to delete this movie?</p>
+              <button onclick="deleteMovie()">Delete Movie</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="theater_sec" class="hidden-section">
+          <div class="theater_div">
+            <h2>THEATER LIST</h2>
+          </div>
+          <table id="theater-list">
+            <!-- Theaters table will be dynamically populated here -->
+          </table>
+          <button onclick="openAddTheaterModal()">Add Theater</button>
+          <button onclick="openUpdateTheaterModal(selectedtheaterid)">
+            Edit Theater
+          </button>
+          <button onclick="openDeleteConfirmationModal()">
+            Delete Theater
+          </button>
+          <!-- Modal for adding a new theater -->
+          <div id="addTheaterModal" class="modal">
+            <div class="modal-content">
+              <span class="close" onclick="closeAddTheaterModal()"
+                >&times;</span
+              >
+              <h2>Add New Theater</h2>
+              <!-- Add form elements for adding a new theater -->
+              <label for="newTheaterName">Name:</label>
+              <input type="text" id="newTheaterName" required autocomplete="off" />
+              <label for="newTheaterCapacity">Capacity:</label>
+              <input type="number" id="newTheaterCapacity" required autocomplete="off" />
+              <label for="newTheaterLocation">Location:</label>
+              <input type="text" id="newTheaterLocation" required autocomplete="off" />
+              <button onclick="addNewTheater()">Add Theater</button>
+            </div>
+          </div>
+          <!-- Modal for updating a theater -->
+          <div id="updateTheaterModal" class="modal">
+            <div class="modal-content">
+              <span class="close" onclick="closeUpdateTheaterModal()"
+                >&times;</span
+              >
+              <h2>Update Theater</h2>
+              <!-- Add form elements for updating a theater -->
+              <label for="updateTheaterName">Name:</label>
+              <input type="text" id="updateTheaterName" required />
+              <label for="updateTheaterCapacity">Capacity:</label>
+              <input type="number" id="updateTheaterCapacity" required />
+              <label for="updateTheaterLocation">Location:</label>
+              <input type="text" id="updateTheaterLocation" required />
+              <button onclick="updateTheater(selectedtheaterid)">
+                Update Theater
+              </button>
+            </div>
+          </div>
+          <!-- Modal for delete confirmation -->
+          <div id="deleteConfirmationModal" class="modal">
+            <div class="modal-content">
+              <h2>Delete Confirmation</h2>
+              <p>Are you sure you want to delete this item?</p>
+              <button onclick="confirmDelete(selectedtheaterid)">
+                Yes, Delete
+              </button>
+              <button onclick="cancelDelete()">Cancel</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Add Showtime Section -->
+        <section id="showtime_sec" class="hidden-section">
+          <div class="showtime_div">
+            <h2>SHOWTIME LIST</h2>
+          </div>
+          <table id="showtime-table">
+            <!-- Showtime table will be dynamically populated here -->
+            <thead>
+              <tr>
+                <th>Showtime ID</th>
+                <th>Movie</th>
+                <th>Theater</th>
+                <th>Start Time</th>
+                <th>Price</th>
+                <th>Available Seats</th>
+                <th>End Time</th>
+              </tr>
+            </thead>
+            <tbody id="showtime-list">
+              <!-- Showtime rows will be dynamically added here -->
+            </tbody>
+          </table>
+          <button onclick="openAddShowtimeModal()">Add Showtime</button>
+          <button onclick="openEditShowtimeModal(selectedshowtimeid)">
+            Edit Showtime
+          </button>
+          <button
+            onclick="opendeleteshowtimeModal('deleteShowtimeConfirmationModal')"
+          >
+            Delete Showtime
+          </button>
+
+          <!-- Modal for adding a new showtime -->
+          <div id="addShowtimeModal" class="modal">
+            <div class="modal-content">
+              <span class="close" onclick="closeModal('addShowtimeModal')"
+                >&times;</span
+              >
+              <h2>Add New Showtime</h2>
+              <!-- Add form elements for adding a new showtime -->
+              <label for="newShowtimeMovie">Movie:</label>
+              <input type="text" id="newShowtimeMovie" required autocomplete="off" />
+              <label for="newShowtimeTheater">Theater:</label>
+              <input type="text" id="newShowtimeTheater" required autocomplete="off" />
+              <label for="newShowtimeTime">Time:</label>
+              <input type="text" id="newShowtimeTime" required autocomplete="off" />
+              <label for="newShowtimeEndTime">End Time:</label>
+              <input type="text" id="newShowtimeEndTime" required autocomplete="off" />
+              <label for="newShowtimePrice">Price:</label>
+              <input type="text" id="newShowtimePrice" required autocomplete="off" />
+              <label for="newShowtimeSeats">Available Seats:</label>
+              <input type="text" id="newShowtimeSeats" required autocomplete="off" />
+              <button onclick="addNewShowtime()">Add Showtime</button>
+            </div>
+          </div>
+
+          <!-- Modal for editing a showtime -->
+          <div id="editShowtimeModal" class="modal">
+            <div class="modal-content">
+              <span class="close" onclick="closeModal('editShowtimeModal')"
+                >&times;</span
+              >
+              <h2>Edit Showtime</h2>
+              <!-- Add form elements for editing a showtime -->
+              <label for="editShowtimeMovie">Movie:</label>
+              <input type="text" id="editShowtimeMovie" required />
+              <label for="editShowtimeTheater">Theater:</label>
+              <input type="text" id="editShowtimeTheater" required />
+              <label for="editShowtimeTime">Time:</label>
+              <input type="text" id="editShowtimeTime" required />
+              <label for="editShowtimeEndTime">End Time:</label>
+              <input type="text" id="editShowtimeEndTime" required />
+              <label for="editShowtimePrice">Price:</label>
+              <input type="text" id="editShowtimePrice" required />
+              <label for="editShowtimeSeats">Available Seats:</label>
+              <input type="text" id="editShowtimeSeats" required />
+              <button onclick="updateShowtime(selectedshowtimeid)">
+                Update Showtime
+              </button>
+            </div>
+          </div>
+
+          <!-- Confirmation Modal for deleting a showtime -->
+          <div id="deleteShowtimeConfirmationModal" class="modal">
+            <div class="modal-content">
+              <span
+                class="close"
+                onclick="closedeleteshowtimeModal('deleteShowtimeConfirmationModal')"
+              >
+                &times;
+              </span>
+              <h2>Delete Showtime</h2>
+              <p>Are you sure you want to delete this showtime?</p>
+              <button onclick="deleteShowtime(selectedshowtimeid)">
+                Delete Showtime
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Add Booking Section -->
+        <section id="booking_sec" class="hidden-section">
+          <div class="booking_div">
+            <h2>BOOKING LIST</h2>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Theater</th>
+                <th>Movie</th>
+                <th>Showtime</th>
+                <th>Number of Tickets</th>
+              </tr>
+            </thead>
+            <tbody id="booking-list">
+              <!-- Existing or dynamically generated rows go here -->
+            </tbody>
+          </table>
+
+          <button
+            onclick="openDeleteBookingConfirmationModal(selectedBookingId)"
+          >
+            Delete Booking
+          </button>
+
+          <div id="confirmationModal" class="modal">
+            <div class="modal-content">
+              <span class="close" onclick="closeConfirmationModal()"
+                >&times;</span
+              >
+              <h2 id="confirmationTitle"></h2>
+              <p id="confirmationMessage"></p>
+              <button id="confirmButton" onclick="confirmAction()">Yes</button>
+              <button onclick="closeConfirmationModal()">No</button>
+            </div>
+          </div>
+
+          <!-- Confirmation Modal for deleting a booking -->
+          <div id="deleteBookingConfirmationModal" class="modal">
+            <div class="modal-content">
+              <span
+                class="close"
+                onclick="closeModal('deleteBookingConfirmationModal')"
+                >&times;</span
+              >
+              <h2>Delete Booking</h2>
+              <p>Are you sure you want to delete this booking?</p>
+              <button onclick="deleteBooking('deleteBookingConfirmationModal')">
+                Delete Booking
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+
+  <script>
+    let selectedBookingId;
+    let selecteduserId;
+    let selectedmovieid;
+    let selectedtheaterid;
+    let selectedshowtimeid;
+    function openLogoutModal() {
+      document.getElementById("logoutModal").style.display = "block";
+    }
+
+    function closeModall() {
+      document.getElementById("logoutModal").style.display = "none";
+    }
+
+    function logout() {
+      // Add logic for logging out (e.g., redirect to logout endpoint)
+      console.log("Logging out...");
+      // For demonstration, redirecting to "/logout" (replace with your actual logout endpoint)
+      window.location.href = "/logout";
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document
+        .getElementById("deleteBtn")
+        .addEventListener("click", openuserDeleteModal);
+    });
+    function openuserModal(selecteduserId) {
+      document.getElementById("userModal").style.display = "block";
+    }
+
+    function closeuserModal() {
+      document.getElementById("userModal").style.display = "none";
+    }
+    function openuserDeleteModal() {
+      document.getElementById("deleteModal").style.display = "block";
+    }
+
+    // Close the delete confirmation modal
+    function closeuserDeleteModal() {
+      document.getElementById("deleteModal").style.display = "none";
+    }
+
+    function showSection(sectionId) {
+      // Hide all sections
+      const sections = document.querySelectorAll(".hidden-section");
+      sections.forEach((section) => {
+        section.style.display = "none";
+      });
+
+      // Show the selected section
+      const selectedSection = document.getElementById(sectionId);
+      if (selectedSection) {
+        selectedSection.style.display = "block";
+      }
+    }
+    showSection("dash_sec");
+
+    function openEditUserModal(selecteduserId) {
+      fetchUserInfo(selecteduserId);
+    }
+    async function fetchUserInfo(userId) {
+      try {
+        const response = await fetch(`/users1/${userId}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new Error("Invalid content type. Expected JSON.");
+        }
+
+        const userData = await response.json();
+        updateEditUserModal(userData);
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+      }
+    }
+
+    function updateEditUserModal(userData) {
+      // Update modal with user data
+      document.getElementById("editUserId").value = userData.user_id;
+      document.getElementById("editUserName").value = userData.username;
+      document.getElementById("editUserEmail").value = userData.email;
+      document.getElementById("editUserPassword").value = ""; // You may choose not to update the password for security reasons
+      document.getElementById("editUserRole").value = userData.Role;
+      document.getElementById("editUserStatus").value = userData.isactive;
+
+      // Display the modal
+      document.getElementById("EditUserModal").style.display = "block";
+    }
+    function closeUserModal(modalId) {
+      document.getElementById(modalId).style.display = "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      // Set initial display to none for all sections
+      const sections = document.querySelectorAll("section");
+      sections.forEach((section) => {
+        section.style.display = "none";
+      });
+
+      // Display the dashboard section by default
+      document.getElementById("dash_sec").style.display = "block";
+
+      // Add event listeners to sidebar links
+      const sidebarLinks = document.querySelectorAll("#sidebar a");
+      sidebarLinks.forEach((link) => {
+        link.addEventListener("click", function (event) {
+          // Prevent default link behavior
+          event.preventDefault();
+
+          // Hide all sections
+          sections.forEach((section) => {
+            section.style.display = "none";
+          });
+
+          // Display the corresponding section
+          const targetSectionId = link.getAttribute("href").substring(1);
+          document.getElementById(targetSectionId).style.display = "block";
+        });
+      });
+    });
+
+    function updateTotals() {
+      // Update total for users
+      const totalUsers = document.querySelectorAll("#user-list tr").length - 1; // Exclude the header row
+      document.querySelector("#dash_sec .total.users").textContent = totalUsers;
+
+      // Update total for theaters
+      const totalTheaters =
+        document.querySelectorAll("#theater-list tr").length - 1; // Exclude the header row
+      document.querySelector("#dash_sec .total.theaters").textContent =
+        totalTheaters;
+
+      // Update total for movies
+      const totalMovies =
+        document.querySelectorAll("#movie-list tr").length - 1; // Exclude the header row
+      document.querySelector("#dash_sec .total.movies").textContent =
+        totalMovies;
+
+      // Update total for bookings
+      const totalBookings =
+        document.querySelectorAll("#booking-list tr").length - 1; // Exclude the header row
+      document.querySelector("#dash_sec .total.bookings").textContent =
+        totalBookings;
+    }
+
+    function fetchMovies() {
+      fetch("/moviesall")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          const moviesTable = document.getElementById("movie-list");
+          // Clear existing table data
+          moviesTable.innerHTML =
+            "<tr><th>ID</th><th>Title</th><th>Genre</th><th>Duration</th></tr>";
+
+          // Populate table with movie data
+          data.forEach((movie) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${movie.movie_id}</td>
+                         <td>${movie.title}</td>
+                         <td>${movie.genre}</td>
+                         <td>${movie.duration}</td>`;
+            row.setAttribute("data-movie-id", movie.movie_id); // Add a data attribute
+
+            // Add click event handler to the row
+            row.addEventListener("click", () => {
+              // Remove "selected" class from previously selected row
+              const selectedRow = document.querySelector(".selected");
+              if (selectedRow) {
+                selectedRow.classList.remove("selected");
+              }
+
+              // Add "selected" class to the clicked row
+              row.classList.add("selected");
+
+              // Set selectedmovieid to the ID of the clicked movie
+              selectedmovieid = movie.movie_id;
+
+              // Update any additional UI or perform actions based on the selected movie
+              // For example, you might want to display more details about the selected movie.
+              console.log("Selected Movie ID:", selectedmovieid);
+            });
+
+            moviesTable.appendChild(row);
+          });
+          updateTotals();
+        })
+        .catch((error) => console.error("Error fetching movies:", error));
+    }
+
+    function openAddMovieModal() {
+      var addMovieModal = document.getElementById("addMovieModal");
+      addMovieModal.style.display = "block";
+    }
+    function closeAddMovieModal() {
+      const modal = document.getElementById("addMovieModal");
+      modal.style.display = "none";
+    }
+
+    // Function to open the "Edit Movie" modal
+    function openEditModal() {
+      var editMovieModal = document.getElementById("editMovieModal");
+      editMovieModal.style.display = "block";
+    }
+    function openfetcher(selectedmovieid) {
+      fetchMovieDetails(selectedmovieid);
+    }
+
+    // Function to close the "Edit Movie" modal
+    function closeEditModal() {
+      var editMovieModal = document.getElementById("editMovieModal");
+      editMovieModal.style.display = "none";
+    }
+
+    // Function to open the "Delete Movie" modal
+    function openDeleteModal() {
+      var deleteMovieModal = document.getElementById("deleteMovieModal");
+      deleteMovieModal.style.display = "block";
+    }
+
+    // Function to close the "Delete Movie" modal
+    function closeDeleteModal() {
+      var deleteMovieModal = document.getElementById("deleteMovieModal");
+      deleteMovieModal.style.display = "none";
+    }
+
+    // Function to add a new movie
+    function addNewMovie() {
+      const formData = new FormData();
+      formData.append("title", document.getElementById("newmovieTitle").value);
+      formData.append("genre", document.getElementById("newmovieGenre").value);
+      formData.append(
+        "release_date",
+        document.getElementById("newmovieReleaseDate").value
+      );
+      formData.append(
+        "duration",
+        document.getElementById("newmovieDuration").value
+      );
+      formData.append(
+        "description",
+        document.getElementById("newmovieDescription").value
+      );
+      formData.append("cast", document.getElementById("newmovieCast").value);
+      formData.append(
+        "trailer_url",
+        document.getElementById("newmovieTrailerUrl").value
+      );
+      formData.append("price", document.getElementById("newmoviePrice").value);
+      formData.append(
+        "image",
+        document.getElementById("newmovieImage").files[0]
+      );
+
+      fetch("/addMovie", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          console.log("Movie added successfully:", result);
+          fetchMovies();
+        })
+        .catch((error) => console.error("Error adding movie:", error));
+    }
+    // Function to fetch and display movie details in the edit modal
+    function fetchMovieDetails(movieId) {
+      fetch(`/movie/${movieId}`)
+        .then((response) => response.json())
+        .then((movie) => {
+          console.log("Movie details fetched successfully:", movie);
+
+          // Use setTimeout to delay DOM manipulation
+          setTimeout(() => {
+            document.getElementById("editmovieTitle").value = movie.title;
+            document.getElementById("editmovieGenre").value = movie.genre;
+            document.getElementById("editmovieReleaseDate").value =
+              movie.release_date;
+            document.getElementById("editmovieDuration").value = movie.duration;
+            document.getElementById("editmovieDescription").value =
+              movie.description;
+            document.getElementById("editmovieCast").value = movie.cast;
+            document.getElementById("editmovieTrailerUrl").value =
+              movie.trailer_url;
+            document.getElementById("editmoviePrice").value = movie.price;
+
+            openEditModal();
+            // Reset the file input by cloning and replacing it
+            const fileInput = document.getElementById("editmovieImage");
+            fileInput.parentNode.replaceChild(
+              fileInput.cloneNode(true),
+              fileInput
+            );
+          }, 0);
+        })
+        .catch((error) => {
+          console.error("Error fetching movie details:", error);
+        });
+    }
+
+    // Function to update an existing movie
+    function updateMovie(selectedMovieId) {
+      const formData = new FormData(document.getElementById("editMovieForm"));
+
+      // Append the movie ID to the form data
+      formData.append("movieId", selectedMovieId);
+
+      fetch(`/movies/${selectedMovieId}`, {
+        method: "PUT",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          console.log("Movie updated successfully:", result);
+          // Additional logic as needed
+          fetchMovies();
+          // Close the modal after updating
+          document.getElementById("editMovieModal").style.display = "none";
+        })
+        .catch((error) => console.error("Error updating movie:", error));
+    }
+
+    // Function to open the delete movie modal
+    function openDeleteMovieModal(movieId) {
+      selectedmovieid = movieId; // Assuming you have a variable to store the selected movie ID
+      const modal = document.getElementById("deleteMovieModal");
+      modal.style.display = "block";
+    }
+
+    // Function to close the delete movie modal
+    function closeDeleteMovieModal() {
+      const modal = document.getElementById("deleteMovieModal");
+      modal.style.display = "none";
+    }
+
+    // Function to delete the selected movie
+    function deleteMovie() {
+      fetch(`/movieD/${selectedmovieid}`, {
+        method: "DELETE",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // After successfully deleting, update UI or handle as needed
+          console.log(data.message);
+          closeDeleteMovieModal(); // Close the modal
+          fetchMovies();
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+    // Fetch and display users on page load
+
+    function fetchUsers() {
+      fetch("/users")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          const usersTable = document.getElementById("user-list");
+          // Clear existing table data
+          usersTable.innerHTML =
+            "<tr><th>ID</th><th>Username</th><th>Email</th><th>Role</th><th>Active Status</th></tr>";
+
+          // Populate table with user data
+          data.forEach((user) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${user.user_id}</td>
+                         <td>${user.username}</td>
+                         <td>${user.email}</td>
+                         <td>${user.Role}</td>
+                         <td>${user.isactive}</td>`;
+            row.setAttribute("data-user-id", user.user_id); // Add a data attribute
+
+            // Add click event handler to the row
+            row.addEventListener("click", () => {
+              // Remove "selected" class from previously selected row
+              const selectedRow = document.querySelector(".selected");
+              if (selectedRow) {
+                selectedRow.classList.remove("selected");
+              }
+
+              // Add "selected" class to the clicked row
+              row.classList.add("selected");
+
+              // Set selectedUser to the ID of the clicked user
+              selecteduserId = user.user_id;
+
+              // Update any additional UI or perform actions based on the selected user
+              // For example, you might want to display more details about the selected user.
+              console.log("Selected User ID:", selecteduserId);
+            });
+            usersTable.appendChild(row);
+          });
+          updateTotals();
+        })
+        .catch((error) => console.error("Error fetching users:", error));
+    }
+
+    function addUser() {
+      // Get user input values
+      var username = document.getElementById("username").value;
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+      var role = document.getElementById("role").value;
+      var isActive = document.getElementById("isActive").value;
+
+      // Perform any client-side validation if needed
+
+      // Create an object with user data
+      var userData = {
+        username: username,
+        email: email,
+        password: password,
+        role: role,
+        isActive: isActive,
+      };
+
+      // Make a fetch request to add a new user
+      fetch("/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((result) => {
+          console.log("User added successfully:", result);
+          closeUserModal("userModal");
+          fetchUsers();
+        })
+        .catch((error) => console.error("Error adding user:", error));
+    }
+    // Function to make a PUT request to update a user
+
+    async function updateUserOnServer(selecteduserId) {
+      const updatedUser = {
+        name: document.getElementById("editUserName").value,
+        email: document.getElementById("editUserEmail").value,
+        password: document.getElementById("editUserPassword").value,
+        role: document.getElementById("editUserRole").value,
+        status: document.getElementById("editUserStatus").value,
+      };
+      console.log("Request body:", updatedUser);
+      try {
+        const response = await fetch(`/users/${selecteduserId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: updatedUser.name,
+            email: updatedUser.email,
+            password: updatedUser.password,
+            Role: updatedUser.role, // Ensure this matches your server-side property name
+            isactive: updatedUser.status, // Ensure this matches your server-side property name
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Handle the response as needed
+        console.log("Update User Result:", data);
+        fetchUsers();
+        closeUserModal("EditUserModal");
+        // Update your local data and UI if necessary
+      } catch (error) {
+        console.error("Error updating user:", error);
+      }
+    }
+
+    // Function to make a DELETE request to delete a user
+    async function deleteUserOnServer() {
+      // Check if a user is selected
+      if (selecteduserId !== null) {
+        try {
+          await fetch(`/users/${selecteduserId}`, {
+            method: "DELETE",
+          });
+          users = users.filter((user) => user.id !== selectedUser);
+          console.log("User deleted with ID:", selecteduserId);
+        } catch (error) {
+          console.error("Error deleting user:", error);
+        }
+        fetchUsers();
+        // Close the delete confirmation modal
+        closeuserDeleteModal();
+      } else {
+        // Handle the case where no user is selected
+        console.log("No user selected for deletion.");
+      }
+    }
+
+    // Fetch and display showtimes on page load
+    function fetchShowtimes() {
+      fetch("/showtimes")
+        .then((response) => response.json())
+        .then((data) => {
+          populateShowtimeTable(data); // Pass the received data to the function
+          updateTotals();
+        })
+        .catch((error) => console.error("Error fetching showtimes:", error));
+    }
+
+    // Function to populate the showtimes table
+    function populateShowtimeTable(showtimes) {
+      // Assuming 'showtime-list' is the ID of your showtimes table
+      const showtimeTable = document.getElementById("showtime-list");
+
+      // Clear existing rows
+      showtimeTable.innerHTML = "";
+
+      // Check if the data is an array
+      if (Array.isArray(showtimes)) {
+        // Iterate over showtimes and create table rows
+        showtimes.forEach((showtime) => {
+          const row = showtimeTable.insertRow();
+          row.setAttribute("data-showtime-id", showtime.showtime_id); // Add a data attribute
+
+          // Add other cells as needed
+          row.insertCell(0).textContent = showtime.showtime_id;
+          row.insertCell(1).textContent = showtime.movie_id;
+          row.insertCell(2).textContent = showtime.theater_id;
+          row.insertCell(3).textContent = showtime.start_time;
+          row.insertCell(4).textContent = showtime.price;
+          row.insertCell(5).textContent = showtime.available_seats;
+          row.insertCell(6).textContent = showtime.end_time;
+
+          // Add event listener for row click
+          row.addEventListener("click", () =>
+            showhandleRowSelection(showtime.showtime_id)
+          );
+        });
+      } else {
+        console.error("Invalid data format:", showtimes);
+      }
+
+      updateTotals();
+    }
+
+    function showhandleRowSelection(selectedshowtimeId) {
+      // Get the selected row using the data attribute
+      const selectedRow = document.querySelector(
+        `[data-showtime-id="${selectedshowtimeId}"]`
+      );
+
+      // Remove the 'selected' class from all rows
+      document.querySelectorAll("#showtime-list tr").forEach((row) => {
+        row.classList.remove("selected");
+      });
+
+      // Add the 'selected' class to the selected row
+      selectedRow.classList.add("selected");
+      selectedshowtimeid = selectedshowtimeId;
+      // Implement your logic to handle row selection
+      console.log("Selected showtime with ID:", selectedshowtimeid);
+    }
+
+    // Showtime Modals and Operations
+    function openAddShowtimeModal() {
+      openShowtimeModal("addShowtimeModal", "Add New Showtime", addNewShowtime);
+    }
+
+    // Function to open the modal
+    function openEditShowtimeModal(selectedihowtimeid) {
+      fetchShowtimeDetails(selectedshowtimeid)
+        .then((showtimeDetails) => {
+          // Populate the modal input fields with showtimeDetails
+          document.getElementById("editShowtimeMovie").value =
+            showtimeDetails.movie_id;
+          document.getElementById("editShowtimeTheater").value =
+            showtimeDetails.theater_id;
+          document.getElementById("editShowtimeTime").value =
+            showtimeDetails.start_time;
+          document.getElementById("editShowtimeEndTime").value =
+            showtimeDetails.end_time;
+          document.getElementById("editShowtimePrice").value =
+            showtimeDetails.price;
+          document.getElementById("editShowtimeSeats").value =
+            showtimeDetails.available_seats;
+
+          // Open the modal
+          const modal = document.getElementById("editShowtimeModal");
+          if (modal) {
+            modal.style.display = "block";
+          }
+        })
+        .catch((error) =>
+          console.error("Error fetching showtime details:", error)
+        );
+    }
+
+    // Function to fetch showtime details by ID
+    function fetchShowtimeDetails(showtimeId) {
+      return fetch(`/showtimes1/${showtimeId}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((showtimeDetails) => showtimeDetails)
+        .catch((error) => {
+          console.error("Error fetching showtime details:", error);
+          throw error;
+        });
+    }
+
+    function closedeleteshowtimeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    // Function to open the modal
+    function opendeleteshowtimeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.style.display = "block";
+      }
+    }
+
+    // Showtime Modal Logic
+    function openShowtimeModal(modalId, title, action) {
+      const modal = document.getElementById(modalId);
+      modal.querySelector("h2").innerText = title;
+      modal.querySelector("button").onclick = () => {
+        action(modalId);
+        closeModal(modalId);
+      };
+      openModal(modalId);
+    }
+
+    // Showtime Logic
+    function addNewShowtime(modalId) {
+      const movieId = document.getElementById("newShowtimeMovie").value;
+      const theaterId = document.getElementById("newShowtimeTheater").value;
+      const startTime = document.getElementById("newShowtimeTime").value;
+      const price = document.getElementById("newShowtimePrice").value;
+      const availableSeats = document.getElementById("newShowtimeSeats").value;
+      const endTime = document.getElementById("newShowtimeEndTime").value; // Add this line
+
+      // Add logic to send data to server
+      fetch("/showtimesN", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          movie_id: movieId,
+          theater_id: theaterId,
+          start_time: startTime,
+          price: price,
+          available_seats: availableSeats,
+          end_time: endTime, // Include end_time in the request
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // After successfully adding, update UI
+          fetchShowtimes();
+          fetchShowtimes();
+          fetchShowtimes();
+          fetchShowtimes();
+
+          console.log(data.message);
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+
+    function updateShowtime(selectedshowtimeid) {
+      const movieId = document.getElementById("editShowtimeMovie").value;
+      const theaterId = document.getElementById("editShowtimeTheater").value;
+      const startTime = document.getElementById("editShowtimeTime").value;
+      const endTime = document.getElementById("editShowtimeEndTime").value; // Added line
+      const price = document.getElementById("editShowtimePrice").value;
+      const availableSeats = document.getElementById("editShowtimeSeats").value;
+
+      // Add logic to send data to the server
+      fetch(`/showtimes/${selectedshowtimeid}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          movie_id: movieId,
+          theater_id: theaterId,
+          start_time: startTime,
+          end_time: endTime, // Added line
+          price: price,
+          available_seats: availableSeats,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          fetchShowtimes();
+          closeModal("editShowtimeModal");
+          console.log(data.message);
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+
+    function deleteShowtime(selectedshowtimeid) {
+      console.log("Selected Showtime ID:", selectedshowtimeid);
+
+      // Add logic to send data to server
+      fetch(`/showtimes1/${selectedshowtimeid}`, {
+        method: "DELETE",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // After successfully deleting, update UI
+          // ...
+          console.log(data.message);
+          fetchShowtimes();
+          closedeleteshowtimeModal("deleteShowtimeConfirmationModal");
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+
+    // Booking Modals and Operations
+    function fetchBookings() {
+      // Make a fetch request to the server to get booking data
+      fetch("/bookings")
+        .then((response) => response.json())
+        .then((data) => {
+          // Assuming data is an array of booking objects
+          // Call a function to populate the booking table with the data
+          populateBookingTable(data);
+        })
+
+        .catch((error) => console.error("Error fetching bookings:", error));
+    }
+
+    // Function to populate the booking table
+    function populateBookingTable(bookings) {
+      // Assuming 'booking-list' is the ID of your booking table
+      const bookingTable = document.getElementById("booking-list");
+
+      // Clear existing rows
+      bookingTable.innerHTML = "";
+
+      // Iterate over bookings and create table rows
+      bookings.forEach((booking) => {
+        const row = bookingTable.insertRow();
+        // Assuming you have fields like 'user', 'showtime', 'seats' in your booking object
+        row.insertCell(0).textContent = booking.user_id;
+        row.insertCell(1).textContent = booking.theater_id;
+        row.insertCell(2).textContent = booking.movie_id;
+        row.insertCell(3).textContent = booking.showtime_id;
+        row.insertCell(4).textContent = booking.num_tickets;
+        row.insertCell(5).textContent = booking.price;
+        row.setAttribute("data-booking-id", booking.booking_id);
+
+        // Add a click event listener to make the row selectable
+        row.addEventListener("click", () =>
+          handleRowSelection(booking.booking_id)
+        );
+        // Add more cells as needed
+      });
+      updateTotals();
+    }
+    function handleRowSelection(bookingId) {
+      // Get the selected row using the data attribute
+      const selectedRow = document.querySelector(
+        `[data-booking-id="${bookingId}"]`
+      );
+
+      // Remove the 'selected' class from all rows
+      const allRows = document.querySelectorAll("#booking-list tr");
+      allRows.forEach((row) => {
+        row.classList.remove("selected");
+      });
+
+      // Add the 'selected' class to the selected row
+      selectedRow.classList.add("selected");
+      selectedBookingId = bookingId;
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.style.display = "block";
+      } else {
+        console.error("Modal not found");
+      }
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.style.display = "none";
+      } else {
+        console.error("Modal not found");
+      }
+    }
+
+    // Function to open the confirmation modal with dynamic content
+    function openConfirmationModal(modalId, title, message, confirmCallback) {
+      const modal = document.getElementById("confirmationModal");
+      const modalTitle = document.getElementById("confirmationTitle");
+      const modalMessage = document.getElementById("confirmationMessage");
+      const confirmButton = document.getElementById("confirmButton");
+
+      // Set dynamic content
+      modalTitle.textContent = title;
+      modalMessage.textContent = message;
+
+      // Set dynamic callback for the confirm button
+      confirmButton.onclick = function () {
+        confirmCallback();
+        closeConfirmationModal();
+      };
+
+      modal.style.display = "block";
+    }
+
+    // Function to open the delete booking confirmation modal
+    function openDeleteBookingConfirmationModal(bookingId) {
+      // Define the confirmation message
+      const confirmationMessage =
+        "Are you sure you want to delete this booking?";
+      // Open the confirmation modal with dynamic content
+      openConfirmationModal(
+        "confirmationModal",
+        "Delete Booking",
+        confirmationMessage,
+        () => deleteBooking(bookingId)
+      );
+    }
+
+    // Function to close the confirmation modal
+    function closeConfirmationModal() {
+      const modal = document.getElementById("confirmationModal");
+      modal.style.display = "none";
+    }
+
+    // Function to handle the confirmed action (generic)
+    function confirmAction() {
+      closeConfirmationModal();
+    }
+
+    // Booking Modal Logic
+    function openBookingModal(modalId, title, action) {
+      const modal = document.getElementById(modalId);
+      modal.querySelector("h2").innerText = title;
+      modal.querySelector("button").onclick = () => {
+        action(modalId);
+        closeModal(modalId);
+      };
+      openModal(modalId);
+    }
+
+    // Booking Logic
+
+    function deleteBooking(bookingId) {
+      // Make a DELETE request to the server to delete the booking
+      fetch(`/bookings/${bookingId}`, {
+        method: "DELETE",
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Booking deleted:", data);
+          // Optionally, update the UI to reflect the deletion
+          fetchBookings(); // Assuming this function reloads the bookings
+        })
+        .catch((error) => console.error("Error deleting booking:", error));
+    }
+
+    /// Declare selectedtheaterid at the global scope
+
+    // Function to fetch and populate the theaters list
+    function fetchTheaters() {
+      fetch("/theaters")
+        .then((response) => response.json())
+        .then((data) => {
+          const theaterTable = document.getElementById("theater-list");
+
+          // Clear existing table data
+          theaterTable.innerHTML = "";
+
+          if (data && data.length > 0) {
+            // Assuming the first element represents the column headers
+            const headers = Object.keys(data[0]);
+            const headerRow =
+              "<tr>" +
+              headers.map((header) => `<th>${header}</th>`).join("") +
+              "</tr>";
+            theaterTable.innerHTML += headerRow;
+
+            data.forEach((theater) => {
+              const row = document.createElement("tr");
+              row.innerHTML = headers
+                .map((header) => `<td>${theater[header]}</td>`)
+                .join("");
+              row.setAttribute("data-theater-id", theater.Theater_id); // Add a data attribute
+
+              // Add click event handler to the row using a closure
+              row.addEventListener(
+                "click",
+                (function (theaterCopy) {
+                  return function () {
+                    // Remove "selected" class from previously selected row
+                    const selectedRow = document.querySelector(".selected");
+                    if (selectedRow) {
+                      selectedRow.classList.remove("selected");
+                    }
+
+                    // Add "selected" class to the clicked row
+                    row.classList.add("selected");
+
+                    // Set selectedtheaterid to the ID of the clicked theater
+                    selectedtheaterid = theaterCopy.Theater_id;
+
+                    // Update any additional UI or perform actions based on the selected theater
+                    console.log("Selected Theater ID:", selectedtheaterid);
+                  };
+                })(theater)
+              );
+
+              theaterTable.appendChild(row);
+            });
+          } else {
+            console.error("Invalid or empty data:", data);
+          }
+        })
+        .catch((error) => console.error("Error fetching theaters:", error));
+
+      updateTotals();
+    }
+
+    // Function to add a new theater
+    async function addNewTheater() {
+      const name = document.getElementById("newTheaterName").value;
+      const capacity = document.getElementById("newTheaterCapacity").value;
+      const location = document.getElementById("newTheaterLocation").value;
+
+      try {
+        const response = await fetch("/theaters", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, capacity, location }),
+        });
+        const result = await response.json();
+        // Handle the result and update your UI
+        console.log("Add Theater Result:", result);
+        // Optionally, fetch the updated theater list after adding a new theater
+        closeAddTheaterModal();
+        fetchTheaters();
+      } catch (error) {
+        console.error("Error adding new theater:", error);
+      }
+    }
+    // Function to open the update theater modal
+    function openUpdateTheaterModal(selectedtheaterid) {
+      // Fetch theater details using selectedtheaterid
+      fetch(`/theaters1/${selectedtheaterid}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((theater) => {
+          // Populate modal inputs with theater details
+          document.getElementById("updateTheaterName").value = theater.name;
+          document.getElementById("updateTheaterCapacity").value =
+            theater.capacity;
+          document.getElementById("updateTheaterLocation").value =
+            theater.location;
+
+          // Display the update theater modal
+          document.getElementById("updateTheaterModal").style.display = "block";
+        })
+        .catch((error) =>
+          console.error("Error fetching theater details:", error)
+        );
+    }
+
+    // Function to close the update theater modal
+    function closeUpdateTheaterModal() {
+      document.getElementById("updateTheaterModal").style.display = "none";
+    }
+
+    // Function to update an existing theater
+    async function updateTheater(selectedtheaterid) {
+      const theaterId = selectedtheaterid;
+      const name = document.getElementById("updateTheaterName").value;
+      const capacity = document.getElementById("updateTheaterCapacity").value;
+      const location = document.getElementById("updateTheaterLocation").value;
+
+      try {
+        const response = await fetch(`/theaters/${theaterId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, capacity, location }),
+        });
+        const result = await response.json();
+        // Handle the result and update your UI
+        console.log("Update Theater Result:", result);
+        // Optionally, fetch the updated theater list after updating a theater
+        fetchTheaters();
+        // Close the update theater modal
+        closeUpdateTheaterModal();
+      } catch (error) {
+        console.error("Error updating theater:", error);
+      }
+    }
+    // Function to delete a theater
+    async function deleteTheater(selectedtheaterid) {
+      try {
+        const response = await fetch(`/theaters/${selectedtheaterid}`, {
+          method: "DELETE",
+        });
+        const result = await response.json();
+        // Handle the result and update your UI
+        console.log("Delete Theater Result:", result);
+        fetchTheaters();
+      } catch (error) {
+        console.error("Error deleting theater:", error);
+      }
+    }
+    // Function to open the delete confirmation modal
+    function openDeleteConfirmationModal() {
+      // Display the delete confirmation modal
+      document.getElementById("deleteConfirmationModal").style.display =
+        "block";
+    }
+
+    // Function to close the delete confirmation modal
+    function closeDeleteConfirmationModal() {
+      document.getElementById("deleteConfirmationModal").style.display = "none";
+    }
+
+    // Function to cancel the delete operation
+    function cancelDelete() {
+      closeDeleteConfirmationModal();
+    }
+
+    // Function to confirm and perform the delete operation
+    function confirmDelete(selectedtheaterId) {
+      // Use the currentTheaterId to delete the corresponding theater
+      deleteTheater(selectedtheaterId);
+      // Close the delete confirmation modal
+      closeDeleteConfirmationModal();
+    }
+
+    function openAddTheaterModal() {
+      const modal = document.getElementById("addTheaterModal");
+      modal.style.display = "block";
+    }
+
+    function closeAddTheaterModal() {
+      const modal = document.getElementById("addTheaterModal");
+      modal.style.display = "none";
+    }
+
+    fetchTheaters();
+    fetchMovies();
+    fetchShowtimes();
+    fetchUsers();
+    fetchBookings();
+  </script>
+</html>

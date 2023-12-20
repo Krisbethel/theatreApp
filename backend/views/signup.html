@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="icon" href="https://img.icons8.com/ios-filled/25/000000/clapperboard.png" type="image/png">
+</head>
+<body class="all">
+    <style>
+        h2{
+            color: red;
+        }
+        .all{
+           background-color: black;
+        }
+            .sign-up-form{
+                width: 300px;
+                box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.3);
+                padding: 20px;
+                margin: 5% auto 0;
+                text-align: center;
+                background-color: white;
+                border-radius: 10px;
+                height: 100vh;     
+                transform: scaleY(.8);
+            }
+            .signup-btn{
+                border-radius: 10px;
+                background-color: red;
+            }
+            button{
+                color: white;
+                width:290px ;
+                padding: 10px;
+                font-size: 15px;
+                margin: 10px 0;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                font-weight: bold;
+            }
+            .sign-up-form h1{
+                color: red;
+                margin-bottom: 30px;
+            }
+            .input-box{
+                border-radius: 10px;
+                padding: 15px;
+                margin: 10px 0;
+                width: 250px;
+                border: 2px solid black;
+                outline: none;
+            }
+            img{
+                width: 70px;
+                margin-top: -20px;
+                height: 100px;
+            }
+            .sign-in{
+                text-decoration: none;
+                color: red;
+            }
+    </style>
+<div class="sign-up-form">
+    <img width="96" height="96" src="https://img.icons8.com/material-rounded/96/FA5252/user.png" alt="user"/>
+<h1>
+    Sign up
+</h1>
+<form action="/signup" method="post" onsubmit="signup(event)">
+    <input type="text" class="input-box" placeholder="username" id="signupUsername" name="username" required autocomplete="off" />
+    <input type="email" class="input-box" placeholder="example@gmail.com" id="signupEmail" name="email" required autocomplete="off" />
+    <input type="password" class="input-box" placeholder="your password" id="signupPassword" name="password" required autocomplete="off" />
+    <input type="password" class="input-box" placeholder="confirm password" name="confirmPassword" required autocomplete="off" />
+    <p><span>
+        <input type="checkbox" required />
+    </span> I agree to the terms and conditions</p>
+    <button type="submit" class="signup-btn">Sign up</button>
+    <p>Have an account?<a href="signin.html" class="sign-in">Sign in</a></p>
+</form>
+
+</div>
+
+
+<script>
+
+    function signup(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    const username = document.getElementById('signupUsername').value;
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+
+    fetch('/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        
+        // Check if the signup was successful (adjust this condition based on your server response)
+        if (data.message === 'User registered successfully!') {
+            // Redirect to the login page
+            window.location.href = '/signin.html';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    });
+}
+
+
+
+</script>
+</body>
+</html>

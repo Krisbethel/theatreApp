@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign in</title>
+    <link rel="icon" href="https://img.icons8.com/ios-filled/25/000000/clapperboard.png" type="image/png">
+    <style>
+      h2 {
+        color: red;
+      }
+
+      .all {
+        background-color: black;
+      }
+
+      .sign-up-form {
+        width: 300px;
+        box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.3);
+        padding: 20px;
+        margin: 8% auto 0;
+        text-align: center;
+        background-color: white;
+        border-radius: 10px;
+      }
+
+      .signup-btn {
+        border-radius: 10px;
+        background-color: red;
+      }
+
+      button {
+        color: white;
+        width: 290px;
+        padding: 10px;
+        font-size: 15px;
+        margin: 10px 0;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .sign-up-form h1 {
+        color: red;
+        margin-bottom: 30px;
+      }
+
+      .input-box {
+        border-radius: 15px;
+        padding: 15px;
+        margin: 10px 0;
+        width: 250px;
+        border: 1px solid black;
+        outline: none;
+      }
+
+      img {
+        width: 70px;
+        margin-top: -20px;
+      }
+
+      .sign-in {
+        text-decoration: none;
+        color: red;
+      }
+    </style>
+  </head>
+  <body class="all">
+    <div class="sign-up-form">
+      <img
+        width="96"
+        height="96"
+        src="https://img.icons8.com/material-rounded/96/FA5252/user.png"
+        alt="user"
+      />
+      <h1>Sign in</h1>
+      <form action="/login" method="post" onsubmit="login(event);">
+        <input
+          type="email"
+          class="input-box"
+          placeholder="example@gmail.com"
+          id="loginEmail"
+        required/>
+        <input
+          type="password"
+          class="input-box"
+          placeholder="your password"
+          id="loginPassword"
+        required/>
+
+        <p>
+          <span><input type="checkbox" required/></span> I agree to the terms and
+          conditions
+        </p>
+        <button type="submit" class="signup-btn">Sign in</button>
+        <p>
+          Don't have an account?<a href="/signup.html" class="sign-in">Sign up</a>
+        </p>
+      </form>
+    </div>
+
+    <script>
+      async function login(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const email = document.getElementById("loginEmail").value;
+        const password = document.getElementById("loginPassword").value;
+        console.log('Sending credentials:', email, password);
+
+        try {
+          const response = await fetch("/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+          });
+
+          if (response.ok) {
+            alert('Login successful!');
+            window.location.href = "/";
+          } else {
+            const data = await response.json();
+            console.error("Login failed:", data.message);
+          }
+        } catch (error) {
+          console.error("Error during login:", error);
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0" />
+      <title>Filmcube</title>
+      <link rel="stylesheet" href="moviePage.css" />
+      <link rel="icon" href="https://img.icons8.com/ios-filled/25/000000/clapperboard.png" type="image/png">
+    <link rel="stylesheet" href="/index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&family=Staatliches&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&family=Rubik:wght@300&family=Staatliches&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="normal nav" id="navbar">
+      <a href="/index.html" class="logo1">
+        <span class="film">Film</span><span class="cube">cube</span></a
+      >
+      <ul>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/movies">Movies</a></li>
+        <li><a href="/booker">Bookings</a></li>
+        <li><a href="signup.html" class="sign up">Sign up</a></li>
+        <li id="userPageButton" style="display: none">
+          <a href="/admin"><img width="50" height="50" class="online"src="https://img.icons8.com/ios-filled/50/user.png" alt="user"/></a>
+        </li>
+      </ul>
+    </nav>
+
+    <section class="movie-Page-Layout">
+      <!-- Loop through each movie and generate content dynamically -->
+      <% movies.forEach(movie => { %>
+      <div class="current-movies" data-movie-id="<%= movie.movie_id %>">
+        <div class="current-movie">
+          <div class="cm-img-box">
+            <img
+              class="movieimages"
+              src="/theatreFillms/<%= movie.image %>"
+              alt="<%= movie.title %>"
+            />
+          </div>
+          <h3 class="movie-title"><%= movie.title %></h3>
+          <p class="screen-name">Screen-Time: <%= movie.duration %> mins</p>
+          <!--  <p class="seats-available">Seats Available: <%= movie.seats_available %></p>-->
+          <div class="booking">
+            <h2 class="price"><%= movie.price %>$</h2>
+            <a class="btn" onclick="openbook('<%= movie.movie_id %>')"
+              >Buy Tickets</a
+            >
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </section>
+  </body>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>About Us</h3>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis
+          justo sed odio fermentum.
+        </p>
+      </div>
+
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/movies">Movies</a></li>
+          <li><a href="/bookings.html">Bookings</a></li>
+          <li><a href="/signup.html">Sign up</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p>Email: info@filmcube.com</p>
+        <p>Phone: 0803849293</p>
+      </div>
+
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          <img
+            width="60"
+            height="50"
+            src="https://img.icons8.com/ios-filled/50/FA5252/twitter.png"
+            alt="twitter"
+          />
+          <img
+            width="50"
+            height="50"
+            src="https://img.icons8.com/ios-filled/50/FA5252/facebook-new.png"
+            alt="facebook-new"
+          />
+          <img
+            width="50"
+            height="50"
+            src="https://img.icons8.com/ios-filled/50/000000/linkedin.png"
+            alt="linkedin"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2023 filmcube. All rights reserved. | Designed by Group3</p>
+    </div>
+  </footer>
+  <script>
+    window.addEventListener("scroll", function () {
+        // Get the scroll position
+        var scrollPosition = window.scrollY;
+
+        // Set the height at which you want to change the background color (70vh in this case)
+        var scrollThreshold = (40 * window.innerHeight) / 100;
+
+        // Select the navbar element
+        var navbar = document.getElementById("navbar");
+
+        // Check if the scroll position is below the threshold
+        if (scrollPosition > scrollThreshold) {
+          // Apply black background color
+          navbar.style.backgroundColor = "black";
+        } else {
+          // Reset to transparent background
+          navbar.style.backgroundColor = "transparent";
+        }
+      });
+    document.addEventListener("DOMContentLoaded", function () {
+        // Check if the user is logged in
+        checkUserLoggedIn().then((isLoggedIn) => {
+          // Get the elements
+          const signUpButton = document.querySelector(".sign");
+          const userPageButton = document.getElementById("userPageButton");
+
+          // Set initial visibility
+          signUpButton.style.display = isLoggedIn ? "none" : "block";
+          userPageButton.style.display = isLoggedIn ? "block" : "none";
+
+          // Other client-side code...
+        });
+      });
+
+      // Function to check if the user is logged in
+      function checkUserLoggedIn() {
+        // Fetch the login status from the server
+        return fetch("/check-login-status")
+          .then((response) => response.json())
+          .then((data) => data.isLoggedIn);
+      }
+    function opendescription() {
+      const movieBoxes = document.getElementsByClassName("current-movies");
+
+      for (let i = 0; i < movieBoxes.length; i++) {
+        movieBoxes[i].addEventListener("click", function () {
+          // Assuming movie_id is a data attribute on the current-movies element
+          const movieId = this.dataset.movieId;
+          window.location.href = `/movies/${movieId}`;
+        });
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", opendescription);
+
+    function openbook(movieId) {
+      const url = `/bookings.html?movie_id=${movieId}`;
+      window.open(url);
+    }
+  </script>
+</html>

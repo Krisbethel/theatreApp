@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Theater Booking</title>
+    <link rel="stylesheet" href="/index.css" />
+    <link rel="icon" href="https://img.icons8.com/ios-filled/25/000000/clapperboard.png" type="image/png">
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        color: black!important;
+      }
+      div h1 {
+        color: white;
+        text-align: center;
+        margin-top: 20px;
+      }
+      .book{
+        margin-block: 1rem;
+      }
+
+      .booking-container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      form {
+        max-width: 600px;
+        margin: 5rem;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      select,
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+        color: black;
+      }
+      button {
+        background-color: red;
+        border: 0.1rem solid var(--color-blk);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        width: 100%;
+      }
+
+      /* CSS styles for the receipt popup */
+      .popup {
+        display: none; /* Start with the popup hidden */
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+      }
+
+      /* Close button style */
+      .popup button {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+
+      /* Close button hover effect */
+      .popup button:hover {
+        background-color: red;
+      }
+      /* Add your existing popup styles */
+
+      .booking-details {
+        padding: 20px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        max-width: 400px; /* Adjust as needed */
+        margin: 20px auto; /* Center the popup on the page */
+      }
+
+      .booking-details p {
+        margin: 10px 0;
+      }
+
+      .booking-details button {
+        background-color: red;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+     <a href="/index.html" class="logo1">
+        <span class="film">Film</span><span class="cube">cube</span></a
+      >
+    </nav>
+    <div class="booking-container">
+      <h1>Booking Details</h1>
+      <form id="bookingForm" onsubmit="submitBooking(); return false;">
+        <!-- Hidden input field to store movie ID -->
+        <input type="hidden" id="movieId" name="movieId" value="" />
+
+        <label for="movie">Movie:</label>
+        <select id="movie" name="movie" required>
+          <option value="" disabled selected>Select a movie</option>
+          <!-- Movies will be dynamically populated here -->
+        </select>
+
+        <label for="showtime">Showtime:</label>
+        <select id="showtime" name="showtime" required>
+          <!-- Showtimes will be dynamically populated here -->
+        </select>
+
+        <label for="theater">Theater:</label>
+        <select id="theater" name="theater" required>
+          <!-- Theaters will be dynamically populated here -->
+        </select>
+
+        <label for="numSeats">Number of Seats:</label>
+        <input type="number" id="numSeats" name="numSeats" min="1" required />
+
+        <label for="price">Price per Ticket:</label>
+        <input type="text" id="price" name="price" readonly />
+
+        <label for="totalPrice">Total Price:</label>
+        <input type="text" id="totalPrice" name="totalPrice" readonly />
+
+        <button id="buyButton" class="book" onclick="submitBooking()">Book Now</button>
+        <div id="paypal-button-container"></div>
+      </form>
+    </div>
+
+    <!-- Your content -->
+
+    <div id="receiptPopup" class="popup">
+      <!-- Receipt content will be displayed here -->
+      <h2>Booking Receipt</h2>
+      <div id="bookingInfo" class="booking-details"></div>
+      <button onclick="closePopup()">Close</button>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>About Us</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis
+            justo sed odio fermentum.
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/movies">Movies</a></li>
+            <li><a href="/bookings.html">Bookings</a></li>
+            <li><a href="/signup.html">Sign up</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <p>Email: info@filmcube.com</p>
+          <p>Phone: 0803849293</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Follow Us</h3>
+          <div class="social-icons">
+            <img
+              width="60"
+              height="50"
+              src="https://img.icons8.com/ios-filled/50/FA5252/twitter.png"
+              alt="twitter"
+            />
+            <img
+              width="50"
+              height="50"
+              src="https://img.icons8.com/ios-filled/50/FA5252/facebook-new.png"
+              alt="facebook-new"
+            />
+            <img
+              width="50"
+              height="50"
+              src="https://img.icons8.com/ios-filled/50/000000/linkedin.png"
+              alt="linkedin"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2023 filmcube. All rights reserved. | Designed by Group3</p>
+      </div>
+    </footer>
+
+    <!-- ... (your existing HTML) ... -->
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AS_4sIsBHpqZJ8BGTpWKnexXelN3cjov7cVBj8h1BS7JQvw3OneAXayzyxzsrkCxS4gpDOW--_xskVjh"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Fetch movies and populate the dropdown
+        fetch("/moviesall")
+          .then((response) => response.json())
+          .then((data) => {
+            const movieDropdown = document.getElementById("movie");
+            data.forEach((movie) => {
+              const option = document.createElement("option");
+              option.value = movie.movie_id;
+              option.textContent = movie.title;
+              movieDropdown.appendChild(option);
+            });
+
+            // Trigger fetching showtimes when the movie selection changes
+            movieDropdown.addEventListener("change", fetchShowtimes);
+
+            // Initial fetch of showtimes for the first movie (if available)
+            if (data.length > 0) {
+              fetchShowtimes();
+            }
+          });
+
+        // Create the PayPal button instance
+        let paypalButton;
+
+        paypalButton = paypal.Buttons({
+          createOrder: function (data, actions) {
+            const totalPrice = document.getElementById("totalPrice").value;
+            // Set up the transaction details
+            return actions.order.create({
+              purchase_units: [
+                {
+                  amount: {
+                    value: totalPrice, // Replace with the actual amount
+                    currency_code: "USD", // Replace with the actual currency code
+                  },
+                },
+              ],
+            });
+          },
+          onApprove: function (data, actions) {
+            return actions.order.capture().then(function (details) {
+              console.log("Capture Details:", details);
+              submitBooking(); // Call your server to save the transaction details and complete the booking
+            });
+          },
+        });
+
+        // Render the PayPal button
+        paypalButton.render("#paypal-button-container");
+      });
+
+      let isSubmitting = false; // Flag to prevent multiple submissions
+
+      function submitBooking() {
+        // Prevent multiple submissions
+        if (isSubmitting) {
+          console.log("Booking already in progress");
+          return;
+        }
+
+        // Set the flag to indicate that a submission is in progress
+        isSubmitting = true;
+
+        const data = {
+          movieId: document.getElementById("movie").value,
+          showtimeId: document.getElementById("showtime").value,
+          theaterId: document.getElementById("theater").value,
+          numSeats: document.getElementById("numSeats").value,
+          price: document.getElementById("price").value,
+          totalPrice: document.getElementById("totalPrice").value,
+        };
+
+        fetch("/bookings", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((bookingData) => {
+            // Show receipt popup with booking details
+            showReceiptPopup(bookingData.bookingId);
+          })
+          .catch((error) => {
+            console.log("Error creating booking:", error);
+          })
+          .finally(() => {
+            // Reset the flag when the request is complete
+            isSubmitting = false;
+          });
+      }
+      // Other functions (fetchShowtimes, fetchTheaters, updatePrice, calculateTotalPrice) remain unchanged
+
+      // Function to show the receipt popup with booking details
+      function showReceiptPopup(bookingId) {
+        // Fetch booking details using the bookingId
+        fetch(`/bookings/${bookingId}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((bookingDetails) => {
+            // Display booking details in the receipt popup
+            const receiptPopup = document.getElementById("receiptPopup");
+            const bookingInfo = document.getElementById("bookingInfo");
+
+            // Check if user_id is null and handle it accordingly
+            const userId =
+              bookingDetails.user_id !== null ? bookingDetails.user_id : "N/A";
+
+            // Create a simple list of booking details
+            const detailsList = `
+        <p>Booking ID: ${bookingDetails.booking_id}</p>
+        <p>User ID: ${userId}</p>
+        <p>Movie ID: ${bookingDetails.movie_id}</p>
+        <p>Showtime ID: ${bookingDetails.showtime_id}</p>
+        <p>Theater ID: ${bookingDetails.theater_id}</p>
+        <p>Number of Tickets: ${bookingDetails.num_tickets}</p>
+        <p>Booking Time: ${bookingDetails.booking_time}</p>
+        <p>Total Price: $${bookingDetails.total_price.toFixed(2)}</p>
+        <p>Status: ${bookingDetails.status}</p>
+        <p>Payment Status: ${bookingDetails.paymentStatus}</p>
+      `;
+
+            bookingInfo.innerHTML = detailsList;
+
+            // Show the receipt popup
+            receiptPopup.style.display = "block";
+          })
+          .catch((error) => {
+            console.error("Error fetching booking details:", error);
+            // Handle the error (e.g., show an error message)
+          });
+      }
+
+      // Function to close the receipt popup
+      function closePopup() {
+        const receiptPopup = document.getElementById("receiptPopup");
+        receiptPopup.style.display = "none";
+        window.location.href = "/movies";
+      }
+
+      function fetchShowtimes() {
+        const movieId = document.getElementById("movie").value;
+
+        // Fetch showtimes for the selected movie
+        fetch(`/showtimes/${movieId}`)
+          .then((response) => response.json())
+          .then((data) => {
+            const showtimeDropdown = document.getElementById("showtime");
+            showtimeDropdown.innerHTML =
+              '<option value="" disabled selected>Select a showtime</option>';
+
+            data.forEach((showtime) => {
+              const option = document.createElement("option");
+              option.value = showtime.showtime_id;
+              option.textContent = `${showtime.start_time} - ${showtime.end_time}`;
+              showtimeDropdown.appendChild(option);
+            });
+
+            // Trigger fetching theaters when the showtime selection changes
+            showtimeDropdown.addEventListener("change", fetchTheaters);
+
+            // Initial fetch of theaters for the first showtime (if available)
+            if (data.length > 0) {
+              fetchTheaters();
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching showtimes:", error);
+            // Handle the error (e.g., show an error message)
+          });
+      }
+
+      function fetchTheaters() {
+        const movieId = document.getElementById("movie").value;
+        const showtimeId = document.getElementById("showtime").value;
+
+        fetch(`/theaterg/${movieId}/${showtimeId}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const theatersArray = Array.isArray(data) ? data : [data];
+            const theaterDropdown = document.getElementById("theater");
+
+            theaterDropdown.innerHTML =
+              '<option value="" disabled selected>Select a theater</option>';
+
+            theatersArray.forEach((theater) => {
+              const option = document.createElement("option");
+              option.value = theater.theater_id;
+              option.textContent = theater.name;
+              theaterDropdown.appendChild(option);
+            });
+
+            theaterDropdown.addEventListener("change", updatePrice);
+
+            if (theatersArray.length > 0) {
+              updatePrice();
+            }
+
+          })
+          .catch((error) => {
+            console.error("Error fetching theaters:", error);
+          });
+      }
+
+      function updatePrice() {
+        const movieId = document.getElementById("movie").value;
+
+        // Fetch the movie details including price from the server
+        fetch(`/movie/${movieId}`)
+          .then((response) => response.json())
+          .then((data) => {
+            // Update the price input field
+            document.getElementById("price").value = data.price;
+            // Trigger calculation of total price when the number of seats changes
+            document
+              .getElementById("numSeats")
+              .addEventListener("input", calculateTotalPrice);
+
+            // Initial calculation of total price
+            calculateTotalPrice();
+          })
+          .catch((error) => {
+            console.error("Error fetching movie details:", error);
+            // Handle the error (e.g., show an error message)
+          });
+      }
+
+      function calculateTotalPrice() {
+        const numSeats = document.getElementById("numSeats").value;
+        const price = document.getElementById("price").value;
+
+        // Calculate total price and update the total price input field
+        const totalPrice = numSeats * price;
+        document.getElementById("totalPrice").value = totalPrice;
+      }
+    </script>
+  </body>
+</html>

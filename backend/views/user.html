@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Page</title>
+    <link rel="stylesheet" href="/index.css" />
+    <link
+      rel="icon"
+      href="https://img.icons8.com/ios-filled/25/000000/clapperboard.png"
+      type="image/png"
+    />
+    <style>
+      .nav {
+        position: relative;
+      }
+      .bttn {
+        margin-block: 2rem;
+        margin-right: 1rem;
+      }
+      main {
+        max-width: 800px;
+        margin: -20px 0.5rem;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+      }
+
+      h1,
+      h2 {
+        color: #d9534f; /* Red color for headers */
+        margin-block: 2rem;
+      }
+
+      p {
+        color: #333; /* Dark text color for paragraphs */
+      }
+
+      /* Styling for booking information */
+      table {
+        width: 600px;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #333;
+        color: #fff;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+      }
+      label[for="newPassword"] {
+        margin-top: 10px;
+        display: block;
+      }
+      #booking-info table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow-x: auto;
+      }
+
+      #booking-info th,
+      #booking-info td {
+        padding: 8px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+
+      /* Responsive styles for the booking information table */
+      @media only screen and (max-width: 600px) {
+        #booking-info {
+          overflow-x: scroll;
+        }
+
+        #booking-info th,
+        #booking-info td {
+          font-size: 12px;
+        }
+      }
+
+      /* Styling for booking information */
+      #booking-info table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      #booking-info th,
+      #booking-info td {
+        padding: 8px;
+        border: 1px solid #ddd;
+        text-align: left;
+        white-space: nowrap; /* Prevent text from wrapping to the next line */
+      }
+
+      /* Optional: Set a max-height for the table to limit its size */
+      #booking-info table {
+        max-height: 300px; /* Adjust the value based on your preference */
+        overflow-y: auto; /* Add vertical scrollbar if needed */
+      }
+    </style>
+  </head>
+  <nav class="some nav" id="navbar">
+    <a href="/index.html" class="logo1">
+      <span class="film">Film</span><span class="cube">cube</span></a
+    >
+    <ul>
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="/movies">Movies</a></li>
+      <li><a href="/booker">Bookings</a></li>
+      <li><a href="signup.html" class="sign up">Sign up</a></li>
+      <li id="userPageButton" style="display: none">
+        <a href="/admin"
+          ><img
+            width="50"
+            height="50"
+            class="online"
+            src="https://img.icons8.com/ios-filled/50/user.png"
+            alt="user"
+        /></a>
+      </li>
+    </ul>
+  </nav>
+  <main>
+    <h1>Welcome to Your Dashboard</h1>
+    <div id="user-info">
+      <!-- User information will be displayed here using JavaScript -->
+      <div id="booking-info"></div>
+    </div>
+    <button class="sign bttn" onclick="openEditModal()">Edit User Info</button>
+    <button class="sign bttn" onclick="openLogoutModal()">Logout</button>
+
+    <!-- Edit User Info Modal -->
+    <div id="editModal" class="user modal">
+      <div class="modal-content">
+        <span onclick="closeModal()" style="cursor: pointer">&times;</span>
+        <h2>Edit User Info</h2>
+        <!-- Input fields for editing user info -->
+        <label for="newUsername">New Username:</label>
+        <input type="text" id="newUsername" required />
+        <br />
+        <label for="newEmail">New Email:</label>
+        <input type="text" id="newEmail" required />
+        <br />
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" required />
+        <br />
+        <button class="sign lefty" onclick="saveUserInfo()">Save</button>
+      </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal">
+      <div class="modal-content">
+        <span onclick="closeModal()" style="cursor: pointer">&times;</span>
+        <h2>Confirm Logout</h2>
+        <p>Are you sure you want to logout?</p>
+        <button class="sign lefty" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>About Us</h3>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis
+          justo sed odio fermentum.
+        </p>
+      </div>
+
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/movies">Movies</a></li>
+          <li><a href="/bookings.html">Bookings</a></li>
+          <li><a href="/signup.html">Sign up</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p>Email: info@filmcube.com</p>
+        <p>Phone: 0803849293</p>
+      </div>
+
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          <img
+            width="60"
+            height="50"
+            src="https://img.icons8.com/ios-filled/50/FA5252/twitter.png"
+            alt="twitter"
+          />
+          <img
+            width="50"
+            height="50"
+            src="https://img.icons8.com/ios-filled/50/FA5252/facebook-new.png"
+            alt="facebook-new"
+          />
+          <img
+            width="50"
+            height="50"
+            src="https://img.icons8.com/ios-filled/50/000000/linkedin.png"
+            alt="linkedin"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2023 filmcube. All rights reserved. | Designed by Group3</p>
+    </div>
+  </footer>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Check if the user is logged in
+      checkUserLoggedIn().then((isLoggedIn) => {
+        // Get the elements
+        const signUpButton = document.querySelector(".sign");
+        const userPageButton = document.getElementById("userPageButton");
+
+        // Set initial visibility
+        signUpButton.style.display = isLoggedIn ? "none" : "block";
+        userPageButton.style.display = isLoggedIn ? "block" : "none";
+
+        // Other client-side code...
+      });
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+      // Fetch user information from the server
+      fetch("/userone")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data); // Check the console log for the server response
+          displayUserInfo(data);
+        })
+        .catch((error) => console.error("Error:", error));
+
+      // Display user information in the DOM
+      function displayUserInfo(userInfo) {
+        const userInfoDiv = document.getElementById("user-info");
+
+        if (userInfo) {
+          // Create HTML elements for user information
+          const userHeader = document.createElement("h2");
+          userHeader.textContent = `Hello, ${userInfo.username}!`;
+          if (userInfo.username === undefined) {
+            window.location.href = "/";
+          }
+          const emailParagraph = document.createElement("p");
+          emailParagraph.textContent = `Email: ${userInfo.email}`;
+
+          // Append user information to the userInfoDiv
+          userInfoDiv.appendChild(userHeader);
+          userInfoDiv.appendChild(emailParagraph);
+
+          // ... (rest of the code)
+        } else {
+          // Handle the case where user information is not available
+          userInfoDiv.innerHTML = "<p>User information not available.</p>";
+        }
+      }
+    });
+
+    // Function to check if the user is logged in
+    function checkUserLoggedIn() {
+      // Fetch the login status from the server
+      return fetch("/check-login-status")
+        .then((response) => response.json())
+        .then((data) => data.isLoggedIn);
+    }
+    function openEditModal() {
+      document.getElementById("editModal").style.display = "block";
+    }
+
+    function openLogoutModal() {
+      document.getElementById("logoutModal").style.display = "block";
+    }
+
+    function closeModal() {
+      document.getElementById("editModal").style.display = "none";
+      document.getElementById("logoutModal").style.display = "none";
+    }
+
+    function logout() {
+      // Add logic for logging out (e.g., redirect to logout endpoint)
+      console.log("Logging out...");
+      // For demonstration, redirecting to "/logout" (replace with your actual logout endpoint)
+      window.location.href = "/logout";
+    }
+
+    function saveUserInfo() {
+      // Gather updated user info from modal input fields
+      const newUsername = document.getElementById("newUsername").value;
+      const newEmail = document.getElementById("newEmail").value;
+      const newPassword = document.getElementById("newPassword").value;
+
+      // Send the updated user info to the server (adjust the endpoint accordingly)
+      fetch(`/users/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: newUsername,
+          email: newEmail,
+          password: newPassword, // Include the new password
+          // Add other fields as needed (Role, isactive, etc.)
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          closeModal(); // Close the modal after updating user info
+        })
+        .catch((error) => console.error("Error updating user info:", error));
+    }
+
+    // JavaScript code to fetch user and booking information and update the DOM
+    document.addEventListener("DOMContentLoaded", function () {
+      // Fetch user information from the server
+      fetch("/user")
+        .then((response) => response.json())
+        .then((data) => {
+          displayUserInfo(data);
+        })
+        .catch((error) => console.error("Error:", error));
+
+      // Display user information in the DOM
+      function displayUserInfo(userInfo) {
+        const userInfoDiv = document.getElementById("user-info");
+
+        if (userInfo) {
+          // Display booking information if available
+          if (userInfo.bookings && userInfo.bookings.length > 0) {
+            const bookingInfoDiv = document.getElementById("booking-info");
+            bookingInfoDiv.innerHTML = "<h2>Booking Information</h2>";
+
+            // Create a table for booking details
+            const bookingTable = document.createElement("table");
+
+            // Create table header
+            const tableHeader = document.createElement("thead");
+            tableHeader.innerHTML = `
+                <tr>
+                  <th>Booking ID</th>
+                  <th>Showtime ID</th>
+                  <th>Movie</th>
+                  <th>Theater</th>
+                  <!-- Add more headers as needed -->
+                </tr>
+              `;
+            bookingTable.appendChild(tableHeader);
+
+            // ... (previous code)
+
+            // Create table body
+            const tableBody = document.createElement("tbody");
+
+            userInfo.bookings.forEach((booking) => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+    <td>${booking.booking_id}</td>
+    <td>${booking.showtime_id}</td>
+    <td>${booking.movie_name}</td>
+    <td>${booking.theater_name}</td>
+    <td>${booking.num_tickets}</td>
+    <td>${new Date(booking.booking_time).toLocaleString()}</td>
+    <td>$${booking.total_price.toFixed(2)}</td>
+    <td>${booking.status}</td>
+    <td>${booking.paymentStatus}</td>
+    <!-- Add more cells as needed -->
+  `;
+              tableBody.appendChild(row);
+            });
+
+            bookingTable.appendChild(tableBody);
+            bookingInfoDiv.appendChild(bookingTable);
+
+            // ... (remaining code)
+
+            // Append booking information to the userInfoDiv
+            userInfoDiv.appendChild(bookingInfoDiv);
+          }
+        } else {
+          // Handle the case where user information is not available
+          userInfoDiv.innerHTML =
+            "<p style='color: white;'>booking information not available.</p>";
+        }
+      }
+    });
+  </script>
+</html>
