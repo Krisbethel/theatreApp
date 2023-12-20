@@ -70,6 +70,6 @@ Theatre App is a web application for managing movie bookings, showtimes, and the
 
 ## Acknowledgments
 
-- Special thanks to [@eddieecodes and @cyril-egbobiani] for their valuable contributions.
+- Special thanks to [@eddieecodes](https://github.com/eddieecodes) and [@cyril-egbobiani](https://github.com/cyril-egbobiani) for their valuable contributions.
 
 
