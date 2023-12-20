@@ -68,4 +68,8 @@ Theatre App is a web application for managing movie bookings, showtimes, and the
    This project is licensed under the MIT License.
 
 
+## Acknowledgments
+
+- Special thanks to [@eddieecodes and @cyril-egbobiani] for their valuable contributions.
+
 
