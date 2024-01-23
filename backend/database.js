@@ -3,12 +3,14 @@ const mysql = require('mysql');
 require('dotenv').config();
 
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
+  connectionLimit: 10, // Adjust the limit based on your application's needs
   host: 'localhost',
   user: 'root',
   password: '',
   database: 'theatredb',
 });
+
 
 db.connect((err) => {
   if (err) {
