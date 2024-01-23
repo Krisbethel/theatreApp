@@ -2,23 +2,24 @@
 const mysql = require('mysql');
 require('dotenv').config();
 
-
-const db = mysql.createPool({
+// Create a connection pool
+const pool = mysql.createPool({
   connectionLimit: 10, // Adjust the limit based on your application's needs
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'theatredb',
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_DATABASE || 'theatredb',
 });
 
+// Promisify the pool.query function
+pool.queryAsync = (sql, values) => {
+  return new Promise((resolve, reject) => {
+    pool.query(sql, values, (error, results) => {
+      if (error) reject(error);
+      else resolve(results);
+    });
+  });
+};
 
-db.connect((err) => {
-  if (err) {
-    console.error('Error connecting to the database:', err.message);
-    console.error('Error details:', err);
-    throw err;
-  }
-  console.log('Connected to the database');
-});
-
-module.exports = db;
+// Export the connection pool
+module.exports = pool;
