@@ -11,6 +11,8 @@ const pool = mysql.createPool({
   database: process.env.DB_DATABASE || 'theatredb',
 });
 
+console.log('Database pool created successfully.');
+
 // Promisify the pool.query function
 pool.queryAsync = (sql, values) => {
   return new Promise((resolve, reject) => {
