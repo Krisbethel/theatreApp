@@ -4,10 +4,10 @@ require('dotenv').config();
 
 
 const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
+  host: localhost
+  user: root,
   password: '',
-  database: process.env.DB_DATABASE,
+  database: theatredb,
 });
 
 db.connect((err) => {
