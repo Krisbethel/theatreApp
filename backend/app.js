@@ -351,13 +351,13 @@ app.get("/movie/:id", (req, res) => {
 
 // Route to get all movies
 app.get("/movies", (req, res) => {
-  db.query("SELECT * FROM Movies", (error, results) => {
+  db.query("SELECT * FROM movies", (error, results) => {
     if (error) throw error;
     res.render("MoviePage", { movies: results });
   });
 });
 app.get("/moviesall", (req, res) => {
-  db.query("SELECT * FROM Movies", (error, results) => {
+  db.query("SELECT * FROM movies", (error, results) => {
     if (error) throw error;
     res.json(results);
   });
@@ -370,7 +370,7 @@ app.get("/moviesrand/random", (req, res) => {
 
   // Fetch random movies from the database
   db.query(
-    "SELECT * FROM Movies ORDER BY RAND() LIMIT ?",
+    "SELECT * FROM movies ORDER BY RAND() LIMIT ?",
     [count],
     (error, results) => {
       if (error) {
