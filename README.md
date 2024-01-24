@@ -1,6 +1,6 @@
-# Theatre App
+# FILMCUBE
 
-Theatre App is a web application for managing movie bookings, showtimes, and theaters.
+This is a web application for managing movie bookings, showtimes, and theaters.
 
 ## Table of Contents
 
@@ -39,7 +39,7 @@ Theatre App is a web application for managing movie bookings, showtimes, and the
 
     ```bash
 
-    cd theatreApp
+    cd backend
     npm install
 
 3. **Set up the database:**
