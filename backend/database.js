@@ -9,7 +9,7 @@ const pool = mysql.createPool({
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_DATABASE || 'bnapgiijrssjt7p5khgt',
-  handshakeTimeout: 3600000,
+  handshakeTimeout: 20000,
 });
 
 console.log('Database pool created successfully.');
