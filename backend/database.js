@@ -9,17 +9,29 @@ const pool = mysql.createPool({
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_DATABASE || 'theatredb',
-handshakeTimeout: 3600000,
+  handshakeTimeout: 3600000,
 });
 
 console.log('Database pool created successfully.');
+
+// Log connection errors
+pool.on('connection', (connection) => {
+  console.log('Database connected.');
+  connection.on('error', (err) => {
+    console.error('Database connection error:', err);
+  });
+});
 
 // Promisify the pool.query function
 pool.queryAsync = (sql, values) => {
   return new Promise((resolve, reject) => {
     pool.query(sql, values, (error, results) => {
-      if (error) reject(error);
-      else resolve(results);
+      if (error) {
+        console.error('Error executing query:', error);
+        reject(error);
+      } else {
+        resolve(results);
+      }
     });
   });
 };
