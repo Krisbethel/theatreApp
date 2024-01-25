@@ -1,6 +1,6 @@
 # FILMCUBE
 
-This is a web application for managing movie bookings, showtimes, and theaters.
+This is a web application for managing movie bookings, showtimes, and theaters. It also has paypal integrated for payment.
 
 ## Table of Contents
 
